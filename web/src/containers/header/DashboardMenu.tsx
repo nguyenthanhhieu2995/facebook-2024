@@ -12,6 +12,9 @@ import NavbarIcon from '@/components/feature-icons/NavbarIcon'
 import MenuItem, { CreateItem } from './MenuItem'
 import Image from '@/components/Image'
 import Search from '@/components/Search'
+import { useState } from 'react'
+import CreatePost from '@/features/home/components/post-header/CreatePost'
+import { useGetMe } from '@/hooks/useGetMe'
 
 export const SOCIAL_MENUS = [
   {
@@ -104,34 +107,54 @@ export const CREATE_MENUS = [
 ]
 
 function DashboardMenu() {
+  const [searchValue, setSearchValue] = useState('')
+  let FilterSocialMenu = SOCIAL_MENUS.filter(menu => menu.title.toLowerCase().includes(searchValue.toLowerCase()))
+  let FilterEntertainmentMenu = ENTERTAINMENT_MENUS.filter(menu =>
+    menu.title.toLowerCase().includes(searchValue.toLowerCase())
+  )
+  const handleChange = (value: string) => {
+    setSearchValue(value)
+  }
+
+  const { data } = useGetMe()
   return (
     <div className="text-gray-900m w-152 rounded-lg bg-gray-50 p-2 pr-0 text-sm font-semibold">
       <h1 className="px-4 py-2 text-2xl font-bold">Menu</h1>
       <div className="group ml-3 mr-1 grid h-[82vh] grid-cols-8 overflow-y-auto">
-        <div className="col-span-5 mx-1 rounded-xl bg-white shadow-thin">
+        <div className="col-span-5 mx-1 my-1 rounded-xl bg-white shadow-thin">
           <div className="flex flex-col px-1.5 pb-2 pt-4">
-            <Search placeholderValue="Search in menu" />
+            <Search
+              placeholderValue="Search in menu"
+              valueInput={searchValue}
+              onchange={e => handleChange(e.target.value)}
+            />
           </div>
           <h3 className="px-4 text-base font-semibold">Social</h3>
-          {SOCIAL_MENUS.map(menu => (
+          {FilterSocialMenu.map(menu => (
             <MenuItem key={menu.title} {...menu} />
           ))}
           <div className="mx-4 my-3 h-[1px] bg-gray-300" />
-          {ENTERTAINMENT_MENUS.map(menu => (
+          {FilterEntertainmentMenu.map(menu => (
             <MenuItem key={menu.title} {...menu} />
           ))}
         </div>
-        <div className="absolute left-2/3 mx-1 w-50 -translate-x-5 overflow-auto rounded-xl bg-white shadow-thin">
+        <div className="absolute left-2/3 mx-1 w-50 -translate-x-5 translate-y-1 overflow-auto rounded-xl bg-white shadow-thin">
           <div className="right-0 top-0 h-fit pb-2">
             <h2 className="px-4 py-2 text-xl font-bold">Create</h2>
-            {CREATE_MENUS.map((menu, index) => {
-              return (
-                <div key={menu.title}>
-                  {index === 4 && <div className="mx-4 my-2 h-[1px] border-0 bg-gray-300"></div>}
-                  <CreateItem {...menu} />
-                </div>
-              )
-            })}
+            <div className="flex flex-col">
+              {CREATE_MENUS.map((menu, index) => {
+                return (
+                  <div key={menu.title} className="flex flex-col">
+                    {index === 4 && <div className="mx-4 my-2 h-[1px] border-0 bg-gray-300"></div>}
+                    {menu.title === 'Post' ? (
+                      <CreatePost data={data} trigger={<CreateItem {...menu} />}></CreatePost>
+                    ) : (
+                      <CreateItem {...menu} />
+                    )}
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>

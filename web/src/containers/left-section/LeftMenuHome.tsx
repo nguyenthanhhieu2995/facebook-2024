@@ -13,7 +13,9 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import NavbarIcon from '@/components/feature-icons/NavbarIcon'
 import FeatureIconV10 from '@/components/feature-icons/FeatureIconV10'
 import FeatureIconV12 from '@/components/feature-icons/FeatureIconV12'
-import { useGetMe } from '@/hooks/useGetMe'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useOutletContext } from 'react-router-dom'
+import { User } from '@/apis/user'
 
 interface NavbarProps {
   className?: string
@@ -22,13 +24,20 @@ interface NavbarProps {
 function LeftMenuHome({ className }: NavbarProps) {
   const [isToggle, setIsToggle] = useState(false)
 
-  const { data } = useGetMe()
+  const { me } = useOutletContext<{ me: User }>()
 
   const MENUS = [
     {
-      label: data?.fullName,
+      label: me?.fullName,
       link: '/',
-      icon: <Image src={data?.avatar} alt="avatar" className="size-9 rounded-full object-cover" />
+      icon: (
+        <Avatar className="size-10 cursor-pointer">
+          <AvatarImage src={me?.avatar} />
+          <AvatarFallback>
+            <span className="sr-only">Loading...</span>
+          </AvatarFallback>
+        </Avatar>
+      )
     },
     { label: 'Friends', link: '/friends', icon: <NavbarIcon name="friends" /> },
     {
@@ -43,7 +52,7 @@ function LeftMenuHome({ className }: NavbarProps) {
     },
     {
       label: 'Group',
-      link: '/groups',
+      link: '/groups/feed',
       icon: <NavbarIcon name="group" />
     },
     {

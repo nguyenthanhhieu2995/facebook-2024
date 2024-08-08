@@ -1,7 +1,7 @@
 import FeatureIconsImagev6 from '../../assets/images/feature-icon-v6.png'
 import { cn } from '../../utils/cn'
 interface FeatureIconProps {
-  name: 'PrivacyCenter' | 'DarkMode' | 'Group'
+  name: 'PrivacyCenter' | 'DarkMode' | 'Group' 
   size?: string
 }
 function FeatureIconV6({ name, size }: FeatureIconProps) {

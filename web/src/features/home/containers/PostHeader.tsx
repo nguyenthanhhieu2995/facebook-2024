@@ -1,22 +1,28 @@
-import { useState } from 'react'
 import Image from '@/components/Image'
 import camera from '@/assets/images/camera.png'
-import avatar from '@/assets/images/avatar.jpeg'
 import smile from '@/assets/images/smile.png'
 import { Button } from '@/components/ui/button'
 import picture from '@/assets/images/picture.png'
 import CreatePost, { Position } from '../components/post-header/CreatePost'
-import { useGetMe } from '@/hooks/useGetMe'
-
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import useStore from '@/store/store'
+import { useOutletContext } from 'react-router-dom'
+import { User } from '@/apis/user'
 function PostHeader() {
-  const { data } = useGetMe()
-
-  const [contentPostHeader, setContentPostHeader] = useState('')
+  const { me } = useOutletContext<{ me: User}>()
+  const contentPostHeader = useStore((state) => state.contentPostHeader)
+  const setContentPostHeader = useStore((state) => state.setContentPostHeader)
   return (
     <div className={'w-125 justify-self-center rounded-lg bg-white px-4 pb-2.5 pt-3 shadow-md'}>
       <div className="flex items-center gap-2 text-lg">
-        <Image className="size-10 rounded-full" src={data?.avatar} alt={avatar} />
+        <Avatar className="size-10 cursor-pointer">
+          <AvatarImage src={me?.avatar} />
+          <AvatarFallback>
+            <span className="sr-only">Loading...</span>
+          </AvatarFallback>
+        </Avatar>
         <CreatePost
+          data={me}
           handleContentPostHeader={setContentPostHeader}
           trigger={
             <Button
@@ -24,7 +30,7 @@ function PostHeader() {
               variant="secondary"
             >
               <p className="pl-2">
-                {contentPostHeader ? contentPostHeader : `${data?.fullName}, what's on your mind?`}
+                {contentPostHeader ? contentPostHeader : `${me?.fullName}, what's on your mind?`}
               </p>
             </Button>
           }
@@ -37,6 +43,7 @@ function PostHeader() {
           <p>Live Video</p>
         </Button>
         <CreatePost
+          data={me}
           handleContentPostHeader={setContentPostHeader}
           isAddPhoto
           trigger={
@@ -47,6 +54,7 @@ function PostHeader() {
           }
         />
         <CreatePost
+          data={me}
           handleContentPostHeader={setContentPostHeader}
           currentPosition={Position.FeelingActivity}
           trigger={

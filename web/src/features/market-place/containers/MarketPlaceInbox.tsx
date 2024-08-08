@@ -23,7 +23,7 @@ export default function MarketplaceInbox() {
   return (
     <div className="grid place-content-center gap-2">
       <div className="mb-2 hidden flex-row rounded-lg bg-white pt-1 text-sm shadow-lg lg:block lg:w-125 xl:w-200">
-        <div className="flex items-center px-4 children:font-semibold children:text-gray-500">
+        <div className="flex wra items-center px-4 children:font-semibold children:text-gray-500">
           <div
             onClick={() => setActiveTab(Tabs.Selling)}
             className={cn('border-b-4 border-transparent', {
@@ -58,7 +58,7 @@ export default function MarketplaceInbox() {
             <div className="border-b border-gray-300" />
             <div>
               <h4 className="px-4 pt-2 text-gray-500">Filter by label</h4>
-              <div className="flex items-center gap-2 px-4 py-3 children:p-2">
+              <div className="flex flex-wrap items-center gap-2 px-4 py-3 children:p-2">
                 <Button
                   size={'icon'}
                   variant={activeFilter === Filters.All ? 'success' : 'secondary'}

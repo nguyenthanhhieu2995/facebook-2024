@@ -2,7 +2,6 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { ChevronDown, Ellipsis, LucideSmile, X } from 'lucide-react'
 import location from '@/assets/images/location.png'
 import colorText from '@/assets/images/color-text.png'
-import avatar from '@/assets/images/avatar.jpeg'
 import gif from '@/assets/images/gif.png'
 import { useState } from 'react'
 import tagUser from '@/assets/images/tag-user.png'
@@ -28,12 +27,16 @@ import Image from '@/components/Image'
 import { Button } from '@/components/ui/button'
 import FeatureIconV12 from '@/components/feature-icons/FeatureIconV12'
 import FeatureIconV4 from '@/components/feature-icons/FeatureIconV4'
+import { User } from '@/apis/user'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface CreatePostProps {
+  data: User | undefined
   isAddPhoto?: boolean
   trigger: React.ReactNode
   currentPosition?: Position
-  handleContentPostHeader: (value: string) => void
+  handleContentPostHeader?: (value: string) => void
 }
 
 export enum Position {
@@ -120,7 +123,7 @@ export const POST_AUDIENCE_OPTIONS = [
   }
 ]
 
-function CreatePost({ isAddPhoto, trigger, currentPosition, handleContentPostHeader }: CreatePostProps) {
+function CreatePost({ data, isAddPhoto, trigger, currentPosition, handleContentPostHeader }: CreatePostProps) {
   const [isOpenAddPhoto, setIsOpenAddPhoto] = useState(isAddPhoto)
   const [position, setPosition] = useState(currentPosition ? currentPosition : Position.Root)
   const [inputValue, setInputValue] = useState('')
@@ -135,7 +138,12 @@ function CreatePost({ isAddPhoto, trigger, currentPosition, handleContentPostHea
           <div className="border-b border-gray-300"></div>
           <div className="group relative my-3 flex flex-row items-center rounded-xl px-4 font-normal">
             <div className="flex-none">
-              <Image className="size-10 rounded-full" src={avatar} alt={avatar} />
+              <Avatar className="size-14 cursor-pointer">
+                <AvatarImage src={data?.avatar} />
+                <AvatarFallback>
+                  <span className="sr-only">Loading...</span>
+                </AvatarFallback>
+              </Avatar>
             </div>
             <div className="flex grow flex-col pl-2">
               <h4 className="font-semibold text-black">Sơn Tùng</h4>
@@ -153,7 +161,7 @@ function CreatePost({ isAddPhoto, trigger, currentPosition, handleContentPostHea
           </div>
         </DialogHeader>
         <DialogDescription>
-          <div className={cn('group relative h-[155px] cursor-text px-4', { 'h-fit': isOpenAddPhoto })}>
+          <div className={cn('group relative h-39 cursor-text px-4', { 'h-fit': isOpenAddPhoto })}>
             <textarea
               value={inputValue}
               onChange={e => setInputValue(e.target.value)}
@@ -169,11 +177,21 @@ function CreatePost({ isAddPhoto, trigger, currentPosition, handleContentPostHea
                 <Image className="size-9 rounded-lg" src={colorText} alt={colorText} />
               </div>
             )}
-            <LucideSmile
-              className={cn('absolute bottom-0 right-3 size-7 cursor-pointer text-gray-300 hover:text-gray-400', {
-                'top-0': isOpenAddPhoto
-              })}
-            />
+
+            <TooltipProvider delayDuration={100} skipDelayDuration={100}>
+              <Tooltip>
+                <TooltipTrigger
+                  className={cn('absolute bottom-0 right-3', {
+                    'top-0': isOpenAddPhoto
+                  })}
+                >
+                  <LucideSmile className="size-7 cursor-pointer text-gray-300 hover:text-gray-400" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{'Emoji'}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </DialogDescription>
         {isOpenAddPhoto && (
@@ -190,7 +208,7 @@ function CreatePost({ isAddPhoto, trigger, currentPosition, handleContentPostHea
                 >
                   <X size={20} onClick={() => setIsOpenAddPhoto(false)} />
                 </Button>
-                <Input id="photo" type="file" className="hidden" />
+                <Input id="photo" type="file" className="hidden"/>
                 <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
                   <div className="flex w-fit rounded-full bg-gray-200 p-2.5 text-center group-hover:bg-gray-300">
                     <FeatureIconV12 name="AddPhoto" size="size-5" />
@@ -217,42 +235,61 @@ function CreatePost({ isAddPhoto, trigger, currentPosition, handleContentPostHea
           </div>
           <div className="flex items-center gap-1">
             {POST_OPTIONS.slice(0, 5).map(item => {
-              if (item.title === 'Photo/Video')
-                return (
-                  <Button
-                    key={item.title}
-                    variant={'ghost'}
-                    size={'icon'}
-                    className={cn('p-2', {
-                      'bg-green-100 hover:bg-green-200': isOpenAddPhoto === true
-                    })}
-                    onClick={() => setIsOpenAddPhoto(true)}
-                  >
-                    {item.icon}
-                  </Button>
-                )
               return (
-                <Button
-                  key={item.title}
-                  variant={'ghost'}
-                  size={'icon'}
-                  className={cn('p-2', {
-                    'cursor-not-allowed opacity-50 grayscale hover:bg-transparent':
-                      item.title === 'GIF' && isOpenAddPhoto
-                  })}
-                  onClick={item.title === 'GIF' && isOpenAddPhoto ? () => {} : () => setPosition(item.position)}
-                >
-                  {item.icon}
-                </Button>
+                <TooltipProvider key={item.title} delayDuration={100} skipDelayDuration={100}>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      {item.title === 'Photo/Video' ? (
+                        <Button
+                          key={item.title}
+                          variant={'ghost'}
+                          size={'icon'}
+                          className={cn('p-2', {
+                            'bg-green-100 hover:bg-green-200': isOpenAddPhoto === true
+                          })}
+                          onClick={() => setIsOpenAddPhoto(true)}
+                        >
+                          {item.icon}
+                        </Button>
+                      ) : (
+                        <Button
+                          key={item.title}
+                          variant={'ghost'}
+                          size={'icon'}
+                          className={cn('p-2', {
+                            'cursor-not-allowed opacity-50 grayscale hover:bg-transparent':
+                              item.title === 'GIF' && isOpenAddPhoto
+                          })}
+                          onClick={item.title === 'GIF' && isOpenAddPhoto ? () => {} : () => setPosition(item.position)}
+                        >
+                          {item.icon}
+                        </Button>
+                      )}
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{item.title}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               )
             })}
-            <div className="rounded-full p-2 hover:bg-gray-100" onClick={() => setPosition(Position.ShowMore)}>
-              <Ellipsis className="size-5" />
-            </div>
+
+            <TooltipProvider delayDuration={100} skipDelayDuration={100}>
+              <Tooltip>
+                <TooltipTrigger className="flex">
+                  <div className="rounded-full p-2 hover:bg-gray-100" onClick={() => setPosition(Position.ShowMore)}>
+                    <Ellipsis className="size-5" />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{'More'}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
         <DialogFooter className="mx-4 pb-2">
-          <Button className="w-full" variant={inputValue ? 'default' : 'secondary'}>
+          <Button className={cn('w-full')} variant={inputValue ? 'default' : 'disabled'}>
             Post
           </Button>
         </DialogFooter>
@@ -288,7 +325,9 @@ function CreatePost({ isAddPhoto, trigger, currentPosition, handleContentPostHea
       <DialogContent
         className="w-[500px] pb-2 shadow-3xl"
         onInteractOutside={() => {
-          handleContentPostHeader(inputValue)
+          if (handleContentPostHeader) {
+            handleContentPostHeader(inputValue)
+          }
           setPosition(Position.Root)
         }}
         hideCloseButton={position !== Position.Root}

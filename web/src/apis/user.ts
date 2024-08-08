@@ -1,17 +1,16 @@
-import request from '@/helpers/request'
+import requestSearch, { request } from '@/helpers/request'
 
 export const getSearchUser = async (inputSearch: string, type = 'less') => {
-  const res = await request.get('/users/search', {
+  const res = await requestSearch.get('/users/search', {
     params: {
       q: inputSearch,
       type
     }
   })
-
   return res.data
 }
 
-interface User {
+export interface User {
   fullName: string
   avatar: string
 }

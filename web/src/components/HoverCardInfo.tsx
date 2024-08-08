@@ -1,6 +1,5 @@
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
-import avatar from '@/assets/images/avatar.jpeg'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import info from '@/assets/images/info.png'
 import user from '@/assets/images/user.png'
 import direction from '@/assets/images/direction.png'
@@ -10,6 +9,7 @@ import like from '@/assets/images/like.png'
 import { cn } from '@/utils/cn'
 import { Button } from './ui/button'
 import Image from './Image'
+import { useGetMe } from '@/hooks/useGetMe'
 
 const PROFILE_DETAILS = [
   { title: 'info', type: 'Page', content: 'News & media website', icon: <Image src={info} alt={'info'} /> },
@@ -31,13 +31,17 @@ interface HoverCardInfoProps {
 }
 
 export default function HoverCardInfo({ trigger }: HoverCardInfoProps) {
+  const { data } = useGetMe()
   return (
     <HoverCard>
       <HoverCardTrigger>{trigger}</HoverCardTrigger>
       <HoverCardContent className="w-[400px] p-4">
         <div className="flex gap-4 px-3 py-2">
-          <Avatar className="size-24">
-            <AvatarImage src={avatar} />
+          <Avatar className="size-24 cursor-pointer">
+            <AvatarImage src={data?.avatar} />
+            <AvatarFallback>
+              <span className="sr-only">Loading...</span>
+            </AvatarFallback>
           </Avatar>
           <div>
             <h1 className="pb-4 text-2xl font-bold">Son Tung</h1>

@@ -74,7 +74,6 @@ export default function Stories() {
       left: scrollOffset,
       behavior: 'smooth'
     })
-    console.log(containerRef.current!.scrollLeft)
   }
 
   return (

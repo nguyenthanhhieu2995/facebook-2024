@@ -15,6 +15,8 @@ import FullLayout from '@/layouts/FullLayout'
 import MinimizeLayout from '@/layouts/MinimizeLayout'
 import { Navigate } from 'react-router-dom'
 import MarketplaceLayout from '@/layouts/MarketPlaceLayout'
+import FriendsLayout from '@/layouts/FriendsLayout'
+import Friends from '@/pages/friends'
 
 const routes = [
   {
@@ -72,6 +74,16 @@ const routes = [
               {
                 path: '/marketplace/inbox',
                 element: <MarketplaceInbox />
+              }
+            ]
+          },
+          {
+            path:'/friends',
+            element: <FriendsLayout/>,
+            children: [
+              {
+                path: '/friends',
+                element: <Friends/>
               }
             ]
           }

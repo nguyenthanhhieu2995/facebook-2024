@@ -1,4 +1,4 @@
-import request from '@/helpers/request'
+import {request} from '@/helpers/request'
 
 interface LoginDto {
   email: string
@@ -10,7 +10,6 @@ export const login = async ({ email, password }: LoginDto) => {
     email,
     password
   })
-
   return res.data
 }
 

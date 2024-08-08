@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { useLocation,useBlocker } from 'react-router-dom'
 import { cn } from '@/utils/cn'
 import { Home, Market, Group, Game } from '@/assets/svgs'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
@@ -35,13 +35,13 @@ function HeaderBar() {
         <TooltipProvider key={bar.name} delayDuration={100} skipDelayDuration={100}>
           <Tooltip>
             <TooltipTrigger
-              className={cn('border-b-4 border-transparent', { 'border-b-[#0866ff]': location.pathname === bar.path })}
+              className={cn('border-b-4 border-transparent', { 'border-b-primary': location.pathname === bar.path })}
             >
               <Link to={bar.path}>
                 <div
                   className={cn('rounded-lg px-10 py-3', {
                     'hover:bg-gray-100': location.pathname !== bar.path
-                  })}
+                  }, { 'text-primary': location.pathname === bar.path })}
                 >
                   {bar.icon}
                 </div>

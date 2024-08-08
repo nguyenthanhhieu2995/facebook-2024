@@ -11,7 +11,7 @@ interface SearchProps {
   className?: string
   paddingInput?: string
   onclick?: () => void
-  onchange?: () => void
+  onchange?: (e:React.ChangeEvent<HTMLInputElement>) => void
 }
 
 function Search(

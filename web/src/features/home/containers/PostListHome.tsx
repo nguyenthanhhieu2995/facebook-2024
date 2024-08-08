@@ -6,10 +6,12 @@ import HoverCardInfo from '@/components/HoverCardInfo'
 import PopoverMoreMenu from '@/features/groups/components/PopoverMoreMenu'
 import { Button } from '@/components/ui/button'
 import Image from '@/components/Image'
-import { useGetMe } from '@/hooks/useGetMe'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useOutletContext } from 'react-router-dom'
+import { User } from '@/apis/user'
 
 function PostListHome() {
-  const { data } = useGetMe()
+  const { me } = useOutletContext<{ me: User}>()
   return (
     <div className="my-4 justify-self-center">
       <div className="mb-2 flex w-125 flex-col space-y-2 rounded-lg bg-white shadow-md">
@@ -17,12 +19,17 @@ function PostListHome() {
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <HoverCardInfo
-                trigger={<Image src={data?.avatar} alt="User Avatar" className="size-10 rounded-full" />}
+                trigger={<Avatar className="size-10 cursor-pointer">
+                  <AvatarImage src={me?.avatar} />
+                  <AvatarFallback>
+                    <span className="sr-only">Loading...</span>
+                  </AvatarFallback>
+                </Avatar>}
               />
               <div>
                 <HoverCardInfo
                   trigger={
-                    <p className="cursor-pointer font-semibold text-gray-800 hover:underline">{data?.fullName}</p>
+                    <p className="cursor-pointer font-semibold text-gray-800 hover:underline">{me?.fullName}</p>
                   }
                 />
                 <p className="cursor-pointer text-xs text-gray-700">Posted 2 hours ago</p>

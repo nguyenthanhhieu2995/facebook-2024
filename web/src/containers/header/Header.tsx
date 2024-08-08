@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useBeforeUnload } from 'react-router-dom'
 import { cn } from '@/utils/cn'
-import avatar from '@/assets/images/avatar.jpeg'
 import HeaderBar from './HeaderBar'
 import logoFacebook from '@/assets/images/logo-facebook.png'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -10,11 +9,27 @@ import { useClickOutside } from '@/hooks/useClickOutSize'
 import HeaderMenu from './HeaderMenu'
 import Search from '@/components/Search'
 import SearchItem from '@/components/SearchItem'
+import { useDebounce } from '@/hooks/useDebounce'
+import { useQuery } from '@tanstack/react-query'
+import { getSearchUser } from '@/apis/user'
 
 export default function Header() {
   const [searchToggle, setSearchToggle] = useState(false)
+  const [searchInput, setSearchInput] = useState('')
   const ref = useRef(null)
   const location = useLocation()
+  const debounceValue = useDebounce(searchInput, 500)
+
+  const searchResult = useQuery({
+    queryKey: ['searchResult', debounceValue],
+    queryFn: () => {
+      if (debounceValue) {
+        return getSearchUser(debounceValue)
+      } else return null
+    },
+    enabled: debounceValue !== ''
+  })
+
   useClickOutside({ ref, onClickOutside: () => setSearchToggle(false) })
 
   return (
@@ -40,6 +55,8 @@ export default function Header() {
               />
             )}
             <Search
+              valueInput={searchInput}
+              onchange={e => setSearchInput(e.target.value)}
               canCollapse={!searchToggle}
               minimalView={!searchToggle && location.pathname !== '/'}
               onclick={() => setSearchToggle(true)}
@@ -54,11 +71,18 @@ export default function Header() {
                 <p className="px-2 py-1 text-sm text-blue-500 hover:bg-gray-100">Edit</p>
               </div>
               <div>
-                <SearchItem image={avatar} name="John Doe" username="johndoe" />
-                <SearchItem image={avatar} name="John Doe" username="johndoe" />
-                <SearchItem image={avatar} name="John Doe" username="johndoe" />
-                <SearchItem image={avatar} name="John Doe" username="johndoe" />
-                <SearchItem image={avatar} name="John Doe" username="johndoe" />
+                {searchResult.data?.data.map(
+                  (searchUser: { id: string; avatar: string; full_name: string; nickname: string }) => {
+                    return (
+                      <SearchItem
+                        key={searchUser.id}
+                        image={searchUser.avatar}
+                        name={searchUser.full_name}
+                        username={searchUser.nickname}
+                      />
+                    )
+                  }
+                )}
               </div>
             </>
           )}

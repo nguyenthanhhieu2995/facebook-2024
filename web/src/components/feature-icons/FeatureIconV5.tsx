@@ -1,7 +1,7 @@
 import FeatureIconsImagev5 from '../../assets/images/feature-icon-v5.png'
 import { cn } from '../../utils/cn'
 interface FeatureIconProps {
-  name: 'ArrowRight' | 'Global' | 'MousePointer'
+  name: 'ArrowRight' | 'Global' | 'MousePointer' | 'Gift'
   size?: string
 }
 function FeatureIconV5({ name, size }: FeatureIconProps) {
@@ -14,6 +14,9 @@ function FeatureIconV5({ name, size }: FeatureIconProps) {
     },
     MousePointer: {
       backgroundPosition: '0px -117px'
+    },
+    Gift: {
+      backgroundPosition: '0px -137px'
     }
   }
   return (

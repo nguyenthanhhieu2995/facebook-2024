@@ -40,6 +40,7 @@ module.exports = {
         99: '396px',
         110: '440px',
         125: '500px',
+        137: '548px',
         141: '564px',
         148: '592px',
         152: '608px',
@@ -53,7 +54,8 @@ module.exports = {
       },
       height: {
         62.5: '250px',
-        91: '364px'
+        91: '364px',
+        39: '156px'
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -126,6 +128,7 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-animate'),
+    require('tailwindcss-animated'),
     plugin(function ({ addVariant }) {
       addVariant('children', '&>*')
     })
