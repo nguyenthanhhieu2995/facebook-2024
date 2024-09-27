@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useLocation,useBlocker } from 'react-router-dom'
+import { useLocation, useBlocker } from 'react-router-dom'
 import { cn } from '@/utils/cn'
 import { Home, Market, Group, Game } from '@/assets/svgs'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
@@ -39,9 +39,13 @@ function HeaderBar() {
             >
               <Link to={bar.path}>
                 <div
-                  className={cn('rounded-lg px-10 py-3', {
-                    'hover:bg-gray-100': location.pathname !== bar.path
-                  }, { 'text-primary': location.pathname === bar.path })}
+                  className={cn(
+                    'rounded-lg px-10 py-3',
+                    {
+                      'hover:bg-gray-100': location.pathname !== bar.path
+                    },
+                    { 'text-primary': location.pathname === bar.path }
+                  )}
                 >
                   {bar.icon}
                 </div>

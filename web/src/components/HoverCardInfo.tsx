@@ -52,7 +52,7 @@ export default function HoverCardInfo({ trigger }: HoverCardInfoProps) {
                   {profile.type}{' '}
                   <span
                     className={cn('font-normal', {
-                      'font-semibold text-blue-500 hover:underline': profile.title === 'direction'
+                      'font-semibold text-primary hover:underline': profile.title === 'direction'
                     })}
                   >
                     {profile.content}

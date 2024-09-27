@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Link, useLocation, useBeforeUnload } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { cn } from '@/utils/cn'
 import HeaderBar from './HeaderBar'
 import logoFacebook from '@/assets/images/logo-facebook.png'
@@ -19,7 +19,6 @@ export default function Header() {
   const ref = useRef(null)
   const location = useLocation()
   const debounceValue = useDebounce(searchInput, 500)
-
   const searchResult = useQuery({
     queryKey: ['searchResult', debounceValue],
     queryFn: () => {
@@ -68,7 +67,7 @@ export default function Header() {
             <>
               <div className="flex items-center justify-between px-2">
                 <h4 className="px-3 font-semibold">Recently</h4>
-                <p className="px-2 py-1 text-sm text-blue-500 hover:bg-gray-100">Edit</p>
+                <p className="px-2 py-1 text-sm text-primary hover:bg-gray-100">Edit</p>
               </div>
               <div>
                 {searchResult.data?.data.map(

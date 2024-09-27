@@ -38,7 +38,6 @@ export default function LeftBarGroupsCreate({ className }: LeftBarGroupsCreatePr
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-  
     console.log(values)
   }
 
@@ -104,7 +103,7 @@ export default function LeftBarGroupsCreate({ className }: LeftBarGroupsCreatePr
                     <FormControl>
                       <Select onValueChange={field.onChange} defaultValue={field.value} required>
                         <SelectTrigger className="rounded-lg p-4">
-                          <SelectValue placeholder={"Choose privacy"} />
+                          <SelectValue placeholder={'Choose privacy'} />
                         </SelectTrigger>
                         <SelectContent className="h-48 w-82">
                           <SelectItem value="public">

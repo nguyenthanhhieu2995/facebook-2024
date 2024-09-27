@@ -1,7 +1,7 @@
 import FeatureIconsImagev16 from '../../assets/images/feature-icon-v16.png'
 import { cn } from '../../utils/cn'
 interface FeatureIconProps {
-  name: 'YourFeed' | 'FriendsRequests' | 'FriendSuggestions' | 'AllFriends' | 'Birthday' 
+  name: 'YourFeed' | 'FriendsRequests' | 'FriendSuggestions' | 'AllFriends' | 'Birthday'
   size?: string
 }
 function FeatureIconV16({ name, size }: FeatureIconProps) {

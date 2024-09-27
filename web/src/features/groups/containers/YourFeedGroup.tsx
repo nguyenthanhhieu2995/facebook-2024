@@ -38,10 +38,10 @@ function YourFeedGroup() {
           </div>
           <div>
             <p className="text-gray-800">Just another day with adorable kittens! 🐱 </p>
-            <a href="#cute-kitten" className="text-blue-500">
+            <a href="#cute-kitten" className="text-primary">
               #CuteKitten
             </a>{' '}
-            <a href="#adventure-cat" className="text-blue-500">
+            <a href="#adventure-cat" className="text-primary">
               #AdventureCat
             </a>
           </div>

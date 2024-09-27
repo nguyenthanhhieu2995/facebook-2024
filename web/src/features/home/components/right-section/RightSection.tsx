@@ -18,7 +18,7 @@ function RightSection() {
       <div className="flex flex-col">
         <div className="flex w-full flex-row items-center justify-between px-2">
           <h4 className="font-semibold text-gray-600">Friend requests</h4>
-          <p className="cursor-pointer p-2 tracking-tighter text-blue-500 hover:bg-gray-200">See all</p>
+          <p className="cursor-pointer p-2 tracking-tighter text-primary hover:bg-gray-200">See all</p>
         </div>
         <div className="w-full">
           <FriendRequestItem />

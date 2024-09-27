@@ -11,11 +11,21 @@ interface SearchProps {
   className?: string
   paddingInput?: string
   onclick?: () => void
-  onchange?: (e:React.ChangeEvent<HTMLInputElement>) => void
+  onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 function Search(
-  { placeholderValue, disabled, valueInput, canCollapse,minimalView, className, paddingInput, onchange, onclick }: SearchProps,
+  {
+    placeholderValue,
+    disabled,
+    valueInput,
+    canCollapse,
+    minimalView,
+    className,
+    paddingInput,
+    onchange,
+    onclick
+  }: SearchProps,
   ref: React.Ref<HTMLInputElement>
 ) {
   return (

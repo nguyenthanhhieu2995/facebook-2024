@@ -1,15 +1,14 @@
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { POST_OPTIONS } from './CreatePost'
-import { Position } from './CreatePost'
+import { POST_OPTIONS } from './CreatePostDefault'
+import { Position, usePositionStore } from '@/features/home/stores/position'
 import FeatureIconV3 from '@/components/feature-icons/FeatureIconV3'
 
 interface ShowMoreProps {
-  handleOpenAddPhoto: () => void
   onBack: () => void
-  setPosition: (position: Position) => void
 }
 
-function ShowMore({ handleOpenAddPhoto, onBack, setPosition }: ShowMoreProps) {
+function ShowMore({ onBack }: ShowMoreProps) {
+  const setPosition = usePositionStore(state => state.setPosition)
   return (
     <>
       <DialogHeader className="relative">
@@ -31,9 +30,6 @@ function ShowMore({ handleOpenAddPhoto, onBack, setPosition }: ShowMoreProps) {
                 key={item.title}
                 className="hover:bg-gray-200"
                 onClick={() => {
-                  if (item.title === 'Photo/Video') {
-                    handleOpenAddPhoto()
-                  }
                   setPosition(item.position)
                 }}
               >

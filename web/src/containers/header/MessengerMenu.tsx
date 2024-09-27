@@ -29,7 +29,7 @@ function MessengerMenu() {
         <p
           onClick={() => setView({ inbox: true, notRead: false })}
           className={cn('min-w-12 cursor-pointer rounded-full p-2 text-center hover:bg-gray-100', {
-            'bg-blue-50 text-blue-500 hover:bg-blue-100': View.inbox
+            'bg-blue-50 text-primary hover:bg-blue-100': View.inbox
           })}
         >
           Inbox
@@ -37,7 +37,7 @@ function MessengerMenu() {
         <p
           onClick={() => setView({ inbox: false, notRead: true })}
           className={cn('cursor-pointer rounded-full p-2 text-center hover:bg-gray-100', {
-            'bg-blue-50 text-blue-500 hover:bg-blue-100': View.notRead
+            'bg-blue-50 text-primary hover:bg-blue-100': View.notRead
           })}
         >
           Community
@@ -60,7 +60,7 @@ function MessengerMenu() {
         <MessengerItem />
         <MessengerItem />
       </div>
-      <div className="mx-6 cursor-pointer border-t-2 border-gray-300 py-2 text-center text-blue-500 hover:underline">
+      <div className="mx-6 cursor-pointer border-t-2 border-gray-300 py-2 text-center text-primary hover:underline">
         Show all in Messenger
       </div>
     </div>

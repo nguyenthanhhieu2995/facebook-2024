@@ -74,7 +74,7 @@ function LeftBarGroups({ className }: NavbarProps) {
           <div className="flex flex-row items-center justify-between">
             {' '}
             <h3 className="px-2 pb-2 font-bold">{`Groups you've joined`}</h3>
-            <p className="cursor-pointer p-2 tracking-tighter text-blue-500 hover:bg-gray-200">See all</p>
+            <p className="cursor-pointer p-2 tracking-tighter text-primary hover:bg-gray-200">See all</p>
           </div>
           <GroupsItem />
           <GroupsItem />
@@ -86,7 +86,7 @@ function LeftBarGroups({ className }: NavbarProps) {
           <div className="flex flex-row items-center justify-between">
             {' '}
             <h3 className="px-2 pb-2 font-bold">{`Groups you've joined`}</h3>
-            <p className="cursor-pointer p-2 tracking-tighter text-blue-500 hover:bg-gray-200">See all</p>
+            <p className="cursor-pointer p-2 tracking-tighter text-primary hover:bg-gray-200">See all</p>
           </div>
           <GroupsItem />
           <GroupsItem />

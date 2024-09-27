@@ -13,7 +13,7 @@ function SearchItem({ image, name, username }: AccountItemProps) {
       to={`/@${username}`}
       className="group flex cursor-pointer items-center justify-between px-4 py-2 hover:bg-gray-100"
     >
-      <Image className="mr-4 inline-block  size-10 rounded-full" src={image} alt={name} />
+      <Image className="mr-4 inline-block size-10 rounded-full" src={image} alt={name} />
       <div className="w-full text-sm">
         <p className="overflow-hidden overflow-ellipsis font-bold">{name}</p>
         <p className="text-xs text-gray-400">{username}</p>

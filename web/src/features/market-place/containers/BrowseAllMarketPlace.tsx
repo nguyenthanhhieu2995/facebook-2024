@@ -2,7 +2,6 @@ import avatar from '@/assets/images/villa.jpg'
 import { MapPin } from 'lucide-react'
 import MarketplaceBrowseItem from '../components/MarketplaceBrowseItem'
 
-
 const TODAY_PICKS = [
   {
     id: 1,

@@ -1,14 +1,13 @@
 import { Outlet, useBlocker } from 'react-router-dom'
 import Header from '@/containers/header/Header'
 import { useGetMe } from '@/hooks/useGetMe'
-import useStore from '@/store/store'
+import {usePositionStore} from '@/features/home/stores/position'
 import { LeavePage } from '@/components/LeavePage'
 export default function FullLayout() {
-  const contentPostHeader = useStore(state => state.contentPostHeader)
-  console.log('render....')
+  const textContentCreatePost = usePositionStore(state => state.textContentCreatePost)
   let blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
-      contentPostHeader !== '' && currentLocation.pathname !== nextLocation.pathname
+      textContentCreatePost !== '' && currentLocation.pathname !== nextLocation.pathname
   )
   const { data } = useGetMe()
   return (

@@ -11,7 +11,7 @@ import { useOutletContext } from 'react-router-dom'
 import { User } from '@/apis/user'
 
 function PostListHome() {
-  const { me } = useOutletContext<{ me: User}>()
+  const { me } = useOutletContext<{ me: User }>()
   return (
     <div className="my-4 justify-self-center">
       <div className="mb-2 flex w-125 flex-col space-y-2 rounded-lg bg-white shadow-md">
@@ -19,18 +19,18 @@ function PostListHome() {
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <HoverCardInfo
-                trigger={<Avatar className="size-10 cursor-pointer">
-                  <AvatarImage src={me?.avatar} />
-                  <AvatarFallback>
-                    <span className="sr-only">Loading...</span>
-                  </AvatarFallback>
-                </Avatar>}
+                trigger={
+                  <Avatar className="size-10 cursor-pointer">
+                    <AvatarImage src={me?.avatar} />
+                    <AvatarFallback>
+                      <span className="sr-only">Loading...</span>
+                    </AvatarFallback>
+                  </Avatar>
+                }
               />
               <div>
                 <HoverCardInfo
-                  trigger={
-                    <p className="cursor-pointer font-semibold text-gray-800 hover:underline">{me?.fullName}</p>
-                  }
+                  trigger={<p className="cursor-pointer font-semibold text-gray-800 hover:underline">{me?.fullName}</p>}
                 />
                 <p className="cursor-pointer text-xs text-gray-700">Posted 2 hours ago</p>
               </div>
@@ -49,11 +49,11 @@ function PostListHome() {
             </div>
           </div>
           <div>
-            <p className="text-gray-800">Just another day with adorable kittens! 🐱 </p>
-            <a href="#cute-kitten" className="text-blue-500">
+            <p className="text-gray-800">Just another day with adorable kittens!</p>
+            <a href="#cute-kitten" className="text-primary">
               #CuteKitten
             </a>{' '}
-            <a href="#adenture-cat" className="text-blue-500">
+            <a href="#adenture-cat" className="text-primary">
               #AdventureCat
             </a>
           </div>

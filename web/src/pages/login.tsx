@@ -26,7 +26,7 @@ export default function Login() {
       }
     }
   })
-console.log(mutation.data)
+  console.log(mutation.data)
   const {
     register,
     handleSubmit,

@@ -1,44 +1,17 @@
-import { useState } from 'react'
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Button } from '@/components/ui/button'
-import { POST_AUDIENCE_OPTIONS } from './CreatePost'
+import { POST_AUDIENCE_OPTIONS } from './UserInfo'
 import FeatureIconV3 from '@/components/feature-icons/FeatureIconV3'
 
-interface postAudienceOption {
-  title: string
-  description?: string
-  icon: JSX.Element
-}
+
 interface PostAudienceProps {
-  currentDefaultPostAudience: postAudienceOption
-  currentPostAudience: postAudienceOption
   onBack: () => void
-  getPostAudienceData: (e: postAudienceOption) => void
-  getDefaultPostAudienceData: (e: postAudienceOption) => void
 }
-export default function PostAudience({
-  currentPostAudience,
-  currentDefaultPostAudience,
-  onBack,
-  getPostAudienceData,
-  getDefaultPostAudienceData
-}: PostAudienceProps) {
-  const [postAudience, setPostAudience] = useState(currentPostAudience)
-  const [checked, setChecked] = useState(currentDefaultPostAudience.title === postAudience.title)
-
-  const handleRadioChange = (value: string) => {
-    const postAudienceOption = POST_AUDIENCE_OPTIONS.find(option => option.title === value)
-    if (postAudienceOption) {
-      setPostAudience(postAudienceOption)
-      setChecked(postAudienceOption.title === currentDefaultPostAudience.title)
-    }
-  }
-
+export default function PostAudience({ onBack }: PostAudienceProps) {
   const handleCheckChange = (e: boolean) => {
-    setChecked(e)
     return e
   }
 
@@ -49,7 +22,6 @@ export default function PostAudience({
           <div
             className="absolute -top-3 left-4 flex cursor-pointer items-center rounded-full bg-gray-200 p-2 hover:bg-gray-300"
             onClick={() => {
-              getPostAudienceData(currentDefaultPostAudience)
               onBack()
             }}
           >
@@ -64,7 +36,7 @@ export default function PostAudience({
         <p className="pt-3 text-sm font-normal">
           Your default audience is set to Only me, but you can change the audience of this specific post.
         </p>
-        <RadioGroup defaultValue={postAudience.title} onValueChange={e => handleRadioChange(e)}>
+        <RadioGroup defaultValue={POST_AUDIENCE_OPTIONS[0].title}>
           {POST_AUDIENCE_OPTIONS.map(option => (
             <Label htmlFor={option.title} className="rounded-xl p-2 text-sm font-normal hover:bg-gray-200">
               <div className="group relative flex flex-row items-center gap-2">
@@ -80,7 +52,7 @@ export default function PostAudience({
         </RadioGroup>
       </div>
       <div className="flex items-center space-x-2 px-4">
-        <Checkbox id="defaultAudience" checked={checked} onCheckedChange={(e: boolean) => handleCheckChange(e)} />
+        <Checkbox id="defaultAudience" checked={true} onCheckedChange={(e: boolean) => handleCheckChange(e)} />
         <label
           htmlFor="defaultAudience"
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -92,7 +64,6 @@ export default function PostAudience({
         <Button
           variant="ghost"
           onClick={() => {
-            getPostAudienceData(currentDefaultPostAudience)
             onBack()
           }}
         >
@@ -102,10 +73,6 @@ export default function PostAudience({
           variant="default"
           className="px-10"
           onClick={() => {
-            getPostAudienceData(postAudience)
-            if (checked) {
-              getDefaultPostAudienceData(postAudience)
-            }
             onBack()
           }}
         >

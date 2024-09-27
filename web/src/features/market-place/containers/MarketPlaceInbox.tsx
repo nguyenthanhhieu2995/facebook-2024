@@ -23,7 +23,7 @@ export default function MarketplaceInbox() {
   return (
     <div className="grid place-content-center gap-2">
       <div className="mb-2 hidden flex-row rounded-lg bg-white pt-1 text-sm shadow-lg lg:block lg:w-125 xl:w-200">
-        <div className="flex wra items-center px-4 children:font-semibold children:text-gray-500">
+        <div className="wra flex items-center px-4 children:font-semibold children:text-gray-500">
           <div
             onClick={() => setActiveTab(Tabs.Selling)}
             className={cn('border-b-4 border-transparent', {

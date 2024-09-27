@@ -3,15 +3,15 @@ import camera from '@/assets/images/camera.png'
 import smile from '@/assets/images/smile.png'
 import { Button } from '@/components/ui/button'
 import picture from '@/assets/images/picture.png'
-import CreatePost, { Position } from '../components/post-header/CreatePost'
+import CreatePost from '../components/create-post'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import useStore from '@/store/store'
 import { useOutletContext } from 'react-router-dom'
 import { User } from '@/apis/user'
+import { Position, usePositionStore } from '@/features/home/stores/position'
 function PostHeader() {
-  const { me } = useOutletContext<{ me: User}>()
-  const contentPostHeader = useStore((state) => state.contentPostHeader)
-  const setContentPostHeader = useStore((state) => state.setContentPostHeader)
+  const { me } = useOutletContext<{ me: User }>()
+  const textContentCreatePost = usePositionStore(state => state.textContentCreatePost)
+  const setPosition = usePositionStore(state => state.setPosition)
   return (
     <div className={'w-125 justify-self-center rounded-lg bg-white px-4 pb-2.5 pt-3 shadow-md'}>
       <div className="flex items-center gap-2 text-lg">
@@ -23,15 +23,12 @@ function PostHeader() {
         </Avatar>
         <CreatePost
           data={me}
-          handleContentPostHeader={setContentPostHeader}
           trigger={
             <Button
               className="flex w-full min-w-72 justify-start rounded-full p-2.5 text-lg font-normal text-gray-500"
               variant="secondary"
             >
-              <p className="pl-2">
-                {contentPostHeader ? contentPostHeader : `${me?.fullName}, what's on your mind?`}
-              </p>
+              <p className="pl-2">{textContentCreatePost ? textContentCreatePost : `${me?.fullName}, what's on your mind?`}</p>
             </Button>
           }
         />
@@ -44,7 +41,6 @@ function PostHeader() {
         </Button>
         <CreatePost
           data={me}
-          handleContentPostHeader={setContentPostHeader}
           isAddPhoto
           trigger={
             <Button size={'default'} variant="ghost" className="basis-1/3 items-center gap-2">
@@ -55,10 +51,14 @@ function PostHeader() {
         />
         <CreatePost
           data={me}
-          handleContentPostHeader={setContentPostHeader}
           currentPosition={Position.FeelingActivity}
           trigger={
-            <Button size={'default'} variant={'ghost'} className="basis-1/3 items-center gap-2">
+            <Button
+              size={'default'}
+              variant={'ghost'}
+              className="basis-1/3 items-center gap-2"
+              onClick={() => setPosition(Position.FeelingActivity)}
+            >
               <Image src={smile} alt="feeling" />
               <p>Feeling/activity</p>
             </Button>

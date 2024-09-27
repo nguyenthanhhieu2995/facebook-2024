@@ -78,12 +78,12 @@ const routes = [
             ]
           },
           {
-            path:'/friends',
-            element: <FriendsLayout/>,
+            path: '/friends',
+            element: <FriendsLayout />,
             children: [
               {
                 path: '/friends',
-                element: <Friends/>
+                element: <Friends />
               }
             ]
           }

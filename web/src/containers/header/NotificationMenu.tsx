@@ -18,7 +18,7 @@ function NotificationDropDown() {
         <p
           onClick={() => setView({ all: true, notRead: false })}
           className={cn('min-w-12 cursor-pointer rounded-full p-2 text-center hover:bg-gray-100', {
-            'bg-blue-50 text-blue-500 hover:bg-blue-100': View.all
+            'bg-blue-50 text-primary hover:bg-blue-100': View.all
           })}
         >
           All
@@ -26,7 +26,7 @@ function NotificationDropDown() {
         <p
           onClick={() => setView({ all: false, notRead: true })}
           className={cn('cursor-pointer rounded-full p-2 text-center hover:bg-gray-100', {
-            'bg-blue-50 text-blue-500 hover:bg-blue-100': View.notRead
+            'bg-blue-50 text-primary hover:bg-blue-100': View.notRead
           })}
         >
           Not read
@@ -35,7 +35,7 @@ function NotificationDropDown() {
       <div className="mb-2 gap-2 px-3">
         <div className="flex items-center justify-between">
           <h3>New</h3>
-          <Link to="/notifications" className="p-2 font-normal text-blue-500 hover:bg-gray-100">
+          <Link to="/notifications" className="p-2 font-normal text-primary hover:bg-gray-100">
             Show all
           </Link>
         </div>

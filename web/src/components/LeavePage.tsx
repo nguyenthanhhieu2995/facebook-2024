@@ -7,19 +7,23 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import useStore from '@/store/store'
+import {usePositionStore} from '@/features/home/stores/position'
 import { X } from 'lucide-react'
 
 export function LeavePage({ blocker }: { blocker: { proceed: () => void; reset: () => void } }) {
-  const setContentPostHeader = useStore(state => state.setContentPostHeader)
+  const textContentCreatePost = usePositionStore(state => state.textContentCreatePost)
+  const setTextContentCreatePost = usePositionStore(state => state.setTextContentCreatePost)
   const handleBeforeLeavePage = () => {
     blocker.proceed()
-    setContentPostHeader('')
+    setTextContentCreatePost('')
   }
   return (
     <Dialog open={true}>
       <DialogContent hideCloseButton className="w-137" onInteractOutside={() => blocker.reset()}>
-        <div onClick={()=>blocker.reset()} className="absolute right-4 top-4 rounded-full bg-input p-1 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+        <div
+          onClick={() => blocker.reset()}
+          className="absolute right-4 top-4 rounded-full bg-input p-1 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+        >
           <X className="size-6" />
           <span className="sr-only">Close</span>
         </div>

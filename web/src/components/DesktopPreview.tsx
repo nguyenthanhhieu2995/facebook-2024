@@ -10,7 +10,7 @@ export default function DesktopPreview() {
   return (
     <div
       className={cn(
-        'max-w-243 relative mx-6 mb-8 h-[86dvh] overflow-hidden rounded-lg bg-white px-4 py-2 pb-4 pt-2 shadow-thin',
+        'relative mx-6 mb-8 h-[86dvh] max-w-243 overflow-hidden rounded-lg bg-white px-4 py-2 pb-4 pt-2 shadow-thin',
         {
           'w-141': smartPhoneView
         }

@@ -24,7 +24,7 @@ function TagPeople({ onBack }: TagPeopleProps) {
         <div className="flex grow flex-row items-center justify-center gap-2">
           <Search className="text-sm" />
         </div>
-        <p className="cursor-pointer pr-4 font-semibold text-blue-500" onClick={onBack}>
+        <p className="cursor-pointer pr-4 font-semibold text-primary" onClick={onBack}>
           Done
         </p>
       </div>

@@ -4,6 +4,7 @@ import DashboardMenu from './DashboardMenu'
 import MessengerMenu from './MessengerMenu'
 import NotificationDropDown from './NotificationMenu'
 import AccountMenu from './AccountMenu'
+import { memo } from 'react'
 
 const MENUS = [
   {
@@ -47,4 +48,4 @@ function HeaderMenu() {
   )
 }
 
-export default HeaderMenu
+export default memo(HeaderMenu)
