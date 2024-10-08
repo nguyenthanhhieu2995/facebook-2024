@@ -16,7 +16,8 @@ const buttonVariants = cva(
         ghost: 'hover:bg-destructive-foreground/60 hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         success: 'bg-primary/10 text-primary hover:bg-primary/20',
-        disabled: 'bg-input opacity-50 cursor-not-allowed'
+        disabled: 'bg-input opacity-50 cursor-not-allowed',
+        green: 'bg-green-500 text-white hover:bg-green-600'
       },
       size: {
         default: 'h-10 px-4 py-2',

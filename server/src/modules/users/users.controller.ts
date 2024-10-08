@@ -1,5 +1,6 @@
 import {auth} from "@/middlewares/auth";
 import {Hono} from "hono";
+import { UsersService } from "./users.service";
 
 export const router = new Hono();
 
@@ -22,3 +23,6 @@ router.get("/me", auth, async (c) => {
     }
 
 })
+
+
+

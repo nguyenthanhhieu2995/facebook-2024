@@ -19,3 +19,4 @@ export const getMe = async () => {
   const res = await request.get<User>('/users/me')
   return res.data
 }
+

@@ -1,4 +1,4 @@
-import { getMe } from '@/apis/user'
+import {  getMe } from '@/apis/user'
 import { useQuery } from '@tanstack/react-query'
 
 export const useGetMe = () =>
@@ -6,3 +6,4 @@ export const useGetMe = () =>
     queryKey: ['me'],
     queryFn: () => getMe()
   })
+

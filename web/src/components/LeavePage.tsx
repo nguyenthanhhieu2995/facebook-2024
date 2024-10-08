@@ -11,7 +11,6 @@ import {usePositionStore} from '@/features/home/stores/position'
 import { X } from 'lucide-react'
 
 export function LeavePage({ blocker }: { blocker: { proceed: () => void; reset: () => void } }) {
-  const textContentCreatePost = usePositionStore(state => state.textContentCreatePost)
   const setTextContentCreatePost = usePositionStore(state => state.setTextContentCreatePost)
   const handleBeforeLeavePage = () => {
     blocker.proceed()

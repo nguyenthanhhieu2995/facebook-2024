@@ -17,7 +17,10 @@ import { Navigate } from 'react-router-dom'
 import MarketplaceLayout from '@/layouts/MarketPlaceLayout'
 import FriendsLayout from '@/layouts/FriendsLayout'
 import Friends from '@/pages/friends'
-
+import IdentifyAccount from '@/pages/IdentifyAccount'
+import LoginLayout from '@/layouts/LoginLayout'
+import ResetPassword from '@/pages/resetPassword'
+import NewPassword from '@/pages/newPassword'
 const routes = [
   {
     element: <AuthGuard />,
@@ -97,6 +100,28 @@ const routes = [
             element: <GroupCreate />
           }
         ]
+      }
+    ]
+  },
+  {
+    path: '/login',
+    element: <LoginLayout />,
+    children: [
+      {
+        path: '/login',
+        element: <Navigate to="/" />
+      },
+      {
+        path: '/login/identify',
+        element: <IdentifyAccount />
+      },
+      {
+        path: '/login/reset-password/',
+        element: <ResetPassword />
+      },
+      {
+        path: '/login/new-password',
+        element: <NewPassword />
       }
     ]
   },

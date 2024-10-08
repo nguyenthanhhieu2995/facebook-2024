@@ -4,8 +4,16 @@ import { comparePassword, hashPassword } from "@/helpers/password";
 import { AuthService } from "./auth.service";
 import { Prisma } from "@prisma/client";
 import { zValidator } from "@hono/zod-validator";
-import { signInDto, signUpDto } from "./dtos/auth.dto";
+import {
+  signInDto,
+  signUpDto,
+  identifyAccountDto,
+  newPasswordDto,
+} from "./dtos/auth.dto";
 import { errorMessages, successMessages } from "@/lib/messages";
+import { mailService } from "@/helpers/email";
+import { WEB_URL } from "@/lib/constants";
+import { auth, verifyToken } from "@/middlewares/auth";
 
 export const router = new Hono();
 
@@ -62,7 +70,6 @@ router
         );
       }
     }
-
     return c.json(
       {
         message: "An error occurred",
@@ -70,4 +77,50 @@ router
       },
       500
     );
-  });
+  })
+  .post(
+    "/login/identify",
+    zValidator("json", identifyAccountDto),
+    async (c) => {
+      const { email } = await c.req.json();
+      const user = await UsersService.getUserByEmail(email);
+      if (!user) {
+        return c.json(
+          {
+            message: errorMessages.userNotFound,
+            status: 404,
+          },
+          404
+        );
+      }
+      return c.json({
+        fullName: user.firstName + " " + user.lastName,
+        email: user.email,
+      });
+    }
+  )
+  .post("/login/reset-password", async (c) => {
+    const { email } = await c.req.json();
+    const user = await UsersService.getUserByEmail(email);
+    const resetPasswordToken = AuthService.createToken({ userId: user.id });
+    await mailService.sendMail({
+      to: user.email,
+      subject: "Reset password",
+      html: `<div>
+     <h1>Reset password</h1>
+     <p>Click <a href="${WEB_URL}/login/new-password?access-token=${resetPasswordToken}">here</a> to reset your password</p>
+     </div>`,
+    });
+    return c.json({ message: "Reset password link was sent" });
+  })
+  .post(
+    "/login/new-password",
+    zValidator("json", newPasswordDto),
+    async (c) => {
+      const { newPassword, accessToken } = await c.req.json();
+      const user = await verifyToken(accessToken);
+      const hashedPassword = await hashPassword(newPassword);
+      await UsersService.updateUser(user.id, { password: hashedPassword });
+      return c.json({ message: "Update password link was sent" });
+    }
+  );

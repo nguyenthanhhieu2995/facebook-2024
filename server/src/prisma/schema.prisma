@@ -19,12 +19,23 @@ model User {
     @@map("user")
 }
 
-model Post {
+model Comment {
     id        String   @id @default(cuid())
-    title     String
     content   String
     createdAt DateTime @default(now()) @map("created_at")
     updateAt  DateTime @updatedAt @map("updated_at")
+
+    @@map("comment")
+}
+
+model Post {
+    id      String @id @default(cuid())
+    title   String
+    content String
+    likes   Int    @default(0)
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
 
     @@map("post")
 }

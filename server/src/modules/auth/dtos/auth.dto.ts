@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { errorMessages } from "@/lib/messages";
-export const forgotPasswordDto = z.object({
+export const identifyAccountDto = z.object({
   email: z
     .string({ required_error: errorMessages.email })
     .email({
@@ -36,11 +36,9 @@ export const signUpDto = z.object({
     .min(2, { message: errorMessages.minLastName }),
 });
 
-export const resetPasswordDto = z.object({
-  password: z
+export const newPasswordDto = z.object({
+  newPassword: z
     .string({ required_error: errorMessages.invalidPassword })
     .min(6, { message: errorMessages.password }),
-  confirmPassword: z
-    .string({ required_error: errorMessages.invalidPassword })
-    .min(6, { message: errorMessages.password }),
+  accessToken: z.string({ required_error: "Access token is required" }),
 });
