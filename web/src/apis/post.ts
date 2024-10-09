@@ -21,12 +21,11 @@ export interface Post {
 
 interface CreatePostDto {
   content: string
-  images: string[]
+  title: string
 }
 
 export const getPosts = async ({ pageParam }: { pageParam: number }) => {
   const res = await request.get(`/posts?page=${pageParam}&limit=${3}`)
-
   return res.data.items
 }
 

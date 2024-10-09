@@ -57,7 +57,12 @@ export default function IdentifyAccount() {
             {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
           </CardContent>
           <CardFooter className="flex justify-end space-x-2">
-            <Button variant="secondary">Cancel</Button>
+            <div
+              className="h-10 cursor-pointer rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300"
+              onClick={() => navigate('/')}
+            >
+              Cancel
+            </div>
             <Button type="submit">Search</Button>
           </CardFooter>
         </form>

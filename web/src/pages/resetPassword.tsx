@@ -14,7 +14,7 @@ import { resetPasswordSchema } from '@/helpers/schema'
 
 export default function resetPassword() {
   const location = useLocation()
-  console.log(location.state)
+  console.log(location)
   const navigate = useNavigate()
   const form = useForm<z.infer<typeof resetPasswordSchema>>({
     resolver: zodResolver(resetPasswordSchema),
@@ -79,7 +79,12 @@ export default function resetPassword() {
               </div>
             </CardContent>
             <CardFooter className="flex justify-end space-x-2">
-              <Button variant="secondary">Not You?</Button>
+              <div
+                className="h-10 px-4 py-2 text-gray-700 bg-gray-200 rounded-md cursor-pointer hover:bg-gray-300"
+                onClick={() => navigate('/login/identify')}
+              >
+                Not You?
+              </div>
               <Button type="submit">Continue</Button>
             </CardFooter>
           </form>

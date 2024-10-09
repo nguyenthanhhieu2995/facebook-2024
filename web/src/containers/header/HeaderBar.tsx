@@ -40,7 +40,7 @@ function HeaderBar() {
               <Link to={bar.path}>
                 <div
                   className={cn(
-                    'rounded-lg px-10 py-3',
+                    'rounded-lg lg:px-10 py-3 md:px-8 sm:px-4 sm:block hidden',
                     {
                       'hover:bg-gray-100': location.pathname !== bar.path
                     },

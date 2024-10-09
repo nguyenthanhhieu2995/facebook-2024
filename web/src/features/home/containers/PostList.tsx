@@ -3,7 +3,6 @@ import { usePostList } from '../hooks/usePostList'
 
 function PostList() {
   const { posts, lastElementRef, isFetching } = usePostList()
-  console.log({ posts })
   return (
     <div className="my-4 justify-self-center">
       {posts?.map(post => (

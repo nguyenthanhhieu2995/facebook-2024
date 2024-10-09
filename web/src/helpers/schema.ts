@@ -14,6 +14,7 @@ export const registerSchema = z.object({
 
 export const createPostSchema = z.object({
   content: z.string().min(1, { message: 'Content must not be empty!' }),
+  title: z.string().min(1, { message: 'Title must not be empty!' }),
   images: z.array(z.string())
 })
 

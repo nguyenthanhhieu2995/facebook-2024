@@ -32,7 +32,7 @@ export const auth = async (c: Context, next: Next) => {
     await next();
   } catch (error) {
     if (error instanceof UnauthorizedException) {
-      return c.json({ message: error.message }, 401);
+      return c.json({ message: "error.message" }, 401);
     }
     return c.json({ message: "Internal server error" }, 500);
   }

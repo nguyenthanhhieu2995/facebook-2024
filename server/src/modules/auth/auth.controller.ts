@@ -9,6 +9,7 @@ import {
   signUpDto,
   identifyAccountDto,
   newPasswordDto,
+  resetPasswordDto,
 } from "./dtos/auth.dto";
 import { errorMessages, successMessages } from "@/lib/messages";
 import { mailService } from "@/helpers/email";
@@ -99,7 +100,7 @@ router
       });
     }
   )
-  .post("/login/reset-password", async (c) => {
+  .post("/login/reset-password",zValidator("json", resetPasswordDto), async (c) => {
     const { email } = await c.req.json();
     const user = await UsersService.getUserByEmail(email);
     const resetPasswordToken = AuthService.createToken({ userId: user.id });
@@ -108,7 +109,7 @@ router
       subject: "Reset password",
       html: `<div>
      <h1>Reset password</h1>
-     <p>Click <a href="${WEB_URL}/login/new-password?access-token=${resetPasswordToken}">here</a> to reset your password</p>
+     <p>Click <a href="${WEB_URL}/login/new-password?resetPassword-token=${resetPasswordToken}">here</a> to reset your password</p>
      </div>`,
     });
     return c.json({ message: "Reset password link was sent" });
@@ -121,6 +122,6 @@ router
       const user = await verifyToken(accessToken);
       const hashedPassword = await hashPassword(newPassword);
       await UsersService.updateUser(user.id, { password: hashedPassword });
-      return c.json({ message: "Update password link was sent" });
+      return c.json({ message: "Update password successfully" });
     }
   );

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import configs from '@/configs/configs'
-import { getToken } from './token'
+import { getToken, removeToken } from './token'
 
 const requestSearch = axios.create({
   baseURL: configs.API_URL_SEARCH,
@@ -39,6 +39,19 @@ request.interceptors.request.use(
     return config
   },
   error => {
+    return Promise.reject(error)
+  }
+)
+
+request.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    if (error.response.status === 401) {
+      removeToken()
+      window.location.reload()
+    }
     return Promise.reject(error)
   }
 )

@@ -17,7 +17,6 @@ interface PostProps {
 
 function Post({ post }: PostProps) {
   const { me } = useOutletContext<{ me: User }>()
-  console.log({post})
   const updatedAt = new Date(post.updatedAt)
   const distanceToNow = formatDistanceToNow(updatedAt, { addSuffix: true })
   return (

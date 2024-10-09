@@ -42,3 +42,12 @@ export const newPasswordDto = z.object({
     .min(6, { message: errorMessages.password }),
   accessToken: z.string({ required_error: "Access token is required" }),
 });
+
+export const resetPasswordDto = z.object({
+  email: z
+    .string({ required_error: errorMessages.email })
+    .email({
+      message: errorMessages.invalidEmail,
+    }),
+});
+

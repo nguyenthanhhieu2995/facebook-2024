@@ -9,18 +9,14 @@ export function usePostList() {
     queryKey: ['posts'],
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
-      console.log(lastPage.length, allPages.length)
       return lastPage.length ? allPages.length + 1 : undefined
     }
   })
-  console.log(data)
   const posts = useMemo(() => data?.pages.flatMap(page => page), [data])
-  console.log( posts )
   const lastElementRef = useIntersectionObserver(() => {
     if (hasNextPage && !isFetching) {
       fetchNextPage()
     }
   }, [fetchNextPage, hasNextPage, isFetching])
- 
   return { posts, lastElementRef, isFetching }
 }
