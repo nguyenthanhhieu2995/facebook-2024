@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function LoginHeader() {
   return (
     <header className="fixed z-0 h-14 w-full place-items-center bg-white shadow-thin">

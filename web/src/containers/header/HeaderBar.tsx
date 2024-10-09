@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useLocation, useBlocker } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { cn } from '@/utils/cn'
 import { Home, Market, Group, Game } from '@/assets/svgs'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
