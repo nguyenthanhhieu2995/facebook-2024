@@ -51,7 +51,6 @@ function DashboardCreateMenus() {
 
   const { data } = useGetMe()
   const navigate = useNavigate()
-  console.log('render DashboardCreateMenus')
   return (
     <div className="flex flex-col">
       {CREATE_MENUS.map((menu, index) => {

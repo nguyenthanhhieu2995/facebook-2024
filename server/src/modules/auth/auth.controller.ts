@@ -144,7 +144,6 @@ router
     const refreshToken = getCookie(c, "refreshToken");
     const authHeader = c.req.raw.headers.get("Authorization");
     const accessToken = authHeader?.split(" ")[1];
-    console.log({ accessToken, });
     const jwtObject = jwt.decode(accessToken) as { userId: string };
     const userId = jwtObject?.userId;
     if (!userId || !refreshToken) {
@@ -160,12 +159,12 @@ router
       refreshToken,
       userId as string
     );
-    console.log({ newAccessToken, newRefreshToken });
     setCookie(c, "refreshToken", newRefreshToken, {
       maxAge: REFRESH_TOKEN_EXPIRE_IN * 12,
       sameSite: "None",
       httpOnly: true,
       secure: true,
+      path: "api/refresh-token",
     });
     return c.json({ newAccessToken });
   });

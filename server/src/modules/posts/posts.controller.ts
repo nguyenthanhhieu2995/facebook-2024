@@ -14,6 +14,5 @@ router
   .post("/", auth, async (c) => {
     const createPostDto = await c.req.json();
     const item = await PostsService.createPost(createPostDto);
-    console.log(item)
     return c.json(item, 201);
   });

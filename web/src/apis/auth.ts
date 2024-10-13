@@ -62,6 +62,5 @@ export const updatePassword = async ({ newPassword, accessToken }: NewPasswordDt
     newPassword,
     accessToken
   })
-  console.log(res)
   return res.data
 }
