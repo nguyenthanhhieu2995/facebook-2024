@@ -1,6 +1,6 @@
 import axios from 'axios'
 import configs from '@/configs/configs'
-import { getToken, removeToken } from './token'
+import { getToken, removeToken, setToken } from './token'
 
 const requestSearch = axios.create({
   baseURL: configs.API_URL_SEARCH,
@@ -28,7 +28,9 @@ const request = axios.create({
   baseURL: configs.API_URL_USER,
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
+  withCredentials: true,
+  timeout: 3000
 })
 request.interceptors.request.use(
   config => {
@@ -47,10 +49,17 @@ request.interceptors.response.use(
   response => {
     return response
   },
-  error => {
+  async (error ) => {
     if (error.response.status === 401) {
-      removeToken()
-      window.location.reload()
+      try {
+        const res = await request.post('/refresh-token')
+        error.config.headers.Authorization = `Bearer ${res.data.newAccessToken}`
+        setToken(res.data.newAccessToken)
+        return request(error.config)
+      } catch (error) {
+        removeToken()
+        window.location.reload()
+      }
     }
     return Promise.reject(error)
   }

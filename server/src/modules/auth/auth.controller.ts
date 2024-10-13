@@ -12,10 +12,10 @@ import {
   resetPasswordDto,
 } from "./dtos/auth.dto";
 import { errorMessages, successMessages } from "@/lib/messages";
-import { mailService } from "@/helpers/email";
-import { WEB_URL } from "@/lib/constants";
-import { auth, verifyToken } from "@/middlewares/auth";
-
+import { verifyToken } from "@/middlewares/auth";
+import jwt from "jsonwebtoken";
+import { getCookie, setCookie } from "hono/cookie";
+import { REFRESH_TOKEN_EXPIRE_IN } from "@/lib/constants";
 export const router = new Hono();
 
 router
@@ -43,8 +43,18 @@ router
       );
     }
 
-    const token = AuthService.createToken({ userId: user.id });
-    return c.json({ token: token });
+    const accessToken = AuthService.createAccessToken({ userId: user.id });
+    const refreshToken = await AuthService.createRefreshToken({
+      userId: user.id,
+    });
+    setCookie(c, "refreshToken", refreshToken, {
+      maxAge: REFRESH_TOKEN_EXPIRE_IN * 12,
+      sameSite: "None",
+      httpOnly: true,
+      secure: true,
+      path: "api/refresh-token",
+    });
+    return c.json({ accessToken });
   })
   .post("/sign-up", zValidator("json", signUpDto), async (c) => {
     const { email, password, firstName, lastName } = await c.req.json();
@@ -56,7 +66,7 @@ router
         firstName,
         lastName,
       });
-      return c.json({ message: successMessages.userCreate });
+      return c.json({ message: successMessages.userCreate, status: 201 });
     } catch (error) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -100,20 +110,25 @@ router
       });
     }
   )
-  .post("/login/reset-password",zValidator("json", resetPasswordDto), async (c) => {
-    const { email } = await c.req.json();
-    const user = await UsersService.getUserByEmail(email);
-    const resetPasswordToken = AuthService.createToken({ userId: user.id });
-    await mailService.sendMail({
-      to: user.email,
-      subject: "Reset password",
-      html: `<div>
-     <h1>Reset password</h1>
-     <p>Click <a href="${WEB_URL}/login/new-password?resetPassword-token=${resetPasswordToken}">here</a> to reset your password</p>
-     </div>`,
-    });
-    return c.json({ message: "Reset password link was sent" });
-  })
+  .post(
+    "/login/reset-password",
+    zValidator("json", resetPasswordDto),
+    async (c) => {
+      const { email } = await c.req.json();
+      const user = await UsersService.getUserByEmail(email);
+      if (!user) {
+        return c.json(
+          {
+            message: errorMessages.userNotFound,
+            status: 404,
+          },
+          404
+        );
+      }
+      await AuthService.forgotPassword(user);
+      return c.json({ message: successMessages.forgotPassword });
+    }
+  )
   .post(
     "/login/new-password",
     zValidator("json", newPasswordDto),
@@ -124,4 +139,33 @@ router
       await UsersService.updateUser(user.id, { password: hashedPassword });
       return c.json({ message: "Update password successfully" });
     }
-  );
+  )
+  .post("/refresh-token", async (c) => {
+    const refreshToken = getCookie(c, "refreshToken");
+    const authHeader = c.req.raw.headers.get("Authorization");
+    const accessToken = authHeader?.split(" ")[1];
+    console.log({ accessToken, });
+    const jwtObject = jwt.decode(accessToken) as { userId: string };
+    const userId = jwtObject?.userId;
+    if (!userId || !refreshToken) {
+      return c.json(
+        {
+          message: "Invalid access token",
+          status: 401,
+        },
+        401
+      );
+    }
+    const { newAccessToken, newRefreshToken } = await AuthService.refreshToken(
+      refreshToken,
+      userId as string
+    );
+    console.log({ newAccessToken, newRefreshToken });
+    setCookie(c, "refreshToken", newRefreshToken, {
+      maxAge: REFRESH_TOKEN_EXPIRE_IN * 12,
+      sameSite: "None",
+      httpOnly: true,
+      secure: true,
+    });
+    return c.json({ newAccessToken });
+  });

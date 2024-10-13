@@ -11,14 +11,16 @@ import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { Link } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
 export type LoginInputs = z.infer<typeof loginSchema>
 
 export default function Login() {
+  const navigate = useNavigate()
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: res => {
-      setToken(res.token)
+      setToken(res.accessToken)
+      navigate('/')
       document.location.reload()
     },
     onError: error => {

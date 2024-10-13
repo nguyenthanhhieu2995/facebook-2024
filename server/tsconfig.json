@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -23,6 +25,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts","vitest.config.ts"],
   "exclude": ["node_modules"]
 }
