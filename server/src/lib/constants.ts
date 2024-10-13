@@ -8,5 +8,5 @@ export const REFRESH_TOKEN_EXPIRE_IN = 60 * 60 * 24 * 10;
 export const MAIL_FROM = process.env.MAIL_FROM;
 export const MAIL_TRANSPORT = process.env.MAIL_TRANSPORT;
 export const REDIS_HOST = process.env.REDIS_HOST;
-export const REDIS_PORT = parseInt(process.env.REDIS_PORT);
+export const REDIS_PORT = parseInt(process.env.REDIS_PORT || "13267");
 export const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
