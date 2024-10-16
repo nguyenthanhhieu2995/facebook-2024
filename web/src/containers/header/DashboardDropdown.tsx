@@ -92,11 +92,11 @@ function DashboardDropdown({onSelect}: DashboardDropdownProps) {
           </div>
           <h3 className="px-4 text-base font-semibold">Social</h3>
           {FilterSocialMenu.map(menu => (
-            <MenuItem key={menu.title} {...menu} onSelect={onSelect} />
+            <MenuItem key={menu.title} {...menu} onClick={onSelect} />
           ))}
           <div className="mx-4 my-3 h-[1px] bg-gray-300" />
           {FilterEntertainmentMenu.map(menu => (
-            <MenuItem key={menu.title} {...menu} onSelect={onSelect} />
+            <MenuItem key={menu.title} {...menu} onClick={onSelect} />
           ))}
         </div>
         <div className="absolute left-2/3 mx-1 w-50 -translate-x-5 translate-y-1 overflow-auto rounded-xl bg-white shadow-thin">

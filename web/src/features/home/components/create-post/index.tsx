@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
 import TagPeople from './TagPeople'
 import FeelingActivity from './FeelingActivity'
 import Gif from './Gif'
@@ -8,11 +8,12 @@ import PostAudience from './PostAudience'
 import { User } from '@/apis/user'
 import { Position, usePositionStore } from '@/features/home/stores/position'
 import { CreatePostDefault } from './CreatePostDefault'
+import { DialogProps } from '@radix-ui/react-dialog'
 
-interface CreatePostProps {
+interface CreatePostProps extends DialogProps {
   data: User | undefined
   isAddPhoto?: boolean
-  trigger: React.ReactNode
+  onCreatePostSuccess?: () => void
   currentPosition?: Position
 }
 
@@ -25,7 +26,7 @@ export enum PostAudienceOptions {
   Setting
 }
 
-function CreatePost({ trigger, data }: CreatePostProps) {
+function CreatePost({ open, onOpenChange, data }: CreatePostProps) {
   const setPosition = usePositionStore(state => state.setPosition)
   const position = usePositionStore(state => state.position)
   const PostContent = {
@@ -45,8 +46,7 @@ function CreatePost({ trigger, data }: CreatePostProps) {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger className="grow">{trigger}</DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className="w-[500px] pb-2 shadow-3xl"
         onInteractOutside={() => {

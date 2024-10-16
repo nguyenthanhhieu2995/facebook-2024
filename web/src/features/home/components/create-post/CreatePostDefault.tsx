@@ -19,7 +19,6 @@ import { createPostSchema } from '@/helpers/schema'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { uploadImage } from '@/helpers/uploadImage'
-import { useOutletContext } from 'react-router-dom'
 import { User } from '@/apis/user'
 
 

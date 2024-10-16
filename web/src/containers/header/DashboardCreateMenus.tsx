@@ -2,21 +2,25 @@ import FeatureIconV11 from '@/components/feature-icons/FeatureIconV11'
 import FeatureIconV12 from '@/components/feature-icons/FeatureIconV12'
 import FeatureIconV13 from '@/components/feature-icons/FeatureIconV13'
 import FeatureIconV7 from '@/components/feature-icons/FeatureIconV7'
-import CreatePost from '@/features/home/components/create-post'
 import { useNavigate } from 'react-router-dom'
 import { CreateItem } from './MenuItem'
-import { useGetMe } from '@/hooks/useGetMe'
 import { memo } from 'react'
+import { useCreatePost } from '@/features/home/stores/post'
 
 interface DashboardCreateMenusProps {
   onSelect?: () => void
 }
 
 function DashboardCreateMenus({onSelect}: DashboardCreateMenusProps) {
+  const  {onOpenCreatePost} = useCreatePost()
   const CREATE_MENUS = [
     {
       title: 'Post',
-      logoIcon: <FeatureIconV7 name="Post" />
+      logoIcon: <FeatureIconV7 name="Post" />,
+      onClick: () => {
+        onSelect?.()
+        onOpenCreatePost()
+      }
     },
     {
       title: 'Story',
@@ -41,7 +45,7 @@ function DashboardCreateMenus({onSelect}: DashboardCreateMenusProps) {
     {
       title: 'Group',
       logoIcon: <FeatureIconV11 name="Group" />,
-      click: () => navigate('/groups/create')
+      onClick: () => navigate('/groups/create')
     },
     {
       title: 'Event',
@@ -53,7 +57,6 @@ function DashboardCreateMenus({onSelect}: DashboardCreateMenusProps) {
     }
   ]
 
-  const { data } = useGetMe()
   
 
   const navigate = useNavigate()
@@ -61,13 +64,10 @@ function DashboardCreateMenus({onSelect}: DashboardCreateMenusProps) {
     <div className="flex flex-col">
       {CREATE_MENUS.map((menu, index) => {
         return (
-          <div key={menu.title} className="flex flex-col" onClick={menu.click}>
+          <div key={menu.title} className="flex flex-col" onClick={menu.onClick}>
             {index === 4 && <div className="mx-4 my-2 h-[1px] border-0 bg-gray-300"></div>}
-            {menu.title === 'Post' ? (
-              <CreatePost data={data} trigger={<CreateItem {...menu} onSelect={onSelect}  />} />
-            ) : (
-              <CreateItem {...menu} onSelect={onSelect} />
-            )}
+            <CreateItem {...menu} />
+
           </div>
         )
       })}

@@ -8,8 +8,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useOutletContext } from 'react-router-dom'
 import { User } from '@/apis/user'
 import { Position, usePositionStore } from '@/features/home/stores/position'
+import { useCreatePost } from '@/features/home/stores/post'
 function PostHeader() {
   const { me } = useOutletContext<{ me: User }>()
+  const { isCreatePostOpen, onToggleCreatePost, onCloseCreatePost, onOpenCreatePost } = useCreatePost()
   const textContentCreatePost = usePositionStore(state => state.textContentCreatePost)
   const setPosition = usePositionStore(state => state.setPosition)
   return (
@@ -21,19 +23,15 @@ function PostHeader() {
             <span className="sr-only">Loading...</span>
           </AvatarFallback>
         </Avatar>
-        <CreatePost
-          data={me}
-          trigger={
-            <Button
-              className="flex w-full min-w-72 justify-start rounded-full p-2.5 text-lg font-normal text-gray-500"
-              variant="secondary"
-            >
-              <p className="pl-2">
-                {textContentCreatePost ? textContentCreatePost : `${me?.fullName}, what's on your mind?`}
-              </p>
-            </Button>
-          }
-        />
+        <Button
+          className="flex w-full min-w-72 justify-start rounded-full p-2.5 text-lg font-normal text-gray-500"
+          variant="secondary"
+          onClick={onOpenCreatePost}
+        >
+          <p className="pl-2">
+            {textContentCreatePost ? textContentCreatePost : `${me?.fullName}, what's on your mind?`}
+          </p>
+        </Button>
       </div>
       <div className="my-2 border-b border-gray-300" />
       <div className="flex w-full cursor-pointer items-center">
@@ -41,32 +39,29 @@ function PostHeader() {
           <Image src={camera} alt="camera" />
           <p>Live Video</p>
         </Button>
-        <CreatePost
-          data={me}
-          isAddPhoto
-          trigger={
-            <Button size={'default'} variant="ghost" className="basis-1/3 items-center gap-2">
-              <Image src={picture} alt="picture" />
-              <p>Photo/Video</p>
-            </Button>
-          }
-        />
-        <CreatePost
-          data={me}
-          currentPosition={Position.FeelingActivity}
-          trigger={
-            <Button
-              size={'default'}
-              variant={'ghost'}
-              className="basis-1/3 items-center gap-2"
-              onClick={() => setPosition(Position.FeelingActivity)}
-            >
-              <Image src={smile} alt="feeling" />
-              <p>Feeling/activity</p>
-            </Button>
-          }
-        />
+        <Button size={'default'} variant="ghost" className="basis-1/3 items-center gap-2" onClick={onOpenCreatePost}>
+          <Image src={picture} alt="picture" />
+          <p>Photo/Video</p>
+        </Button>
+        <Button
+          size={'default'}
+          variant={'ghost'}
+          className="basis-1/3 items-center gap-2"
+          onClick={() => {
+            setPosition(Position.FeelingActivity)
+            onOpenCreatePost()
+          }}
+        >
+          <Image src={smile} alt="feeling" />
+          <p>Feeling/activity</p>
+        </Button>
       </div>
+      <CreatePost
+        open={isCreatePostOpen}
+        onOpenChange={onToggleCreatePost}
+        onCreatePostSuccess={onCloseCreatePost}
+        data={me}
+      />
     </div>
   )
 }

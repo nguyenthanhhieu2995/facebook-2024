@@ -1,7 +1,6 @@
 import { User } from '@/apis/user'
 import Image from '@/components/Image'
 import { Button } from '@/components/ui/button'
-import { useOutletContext } from 'react-router-dom'
 import { ChevronDown } from 'lucide-react'
 import global from '@/assets/images/global.png'
 import friend from '@/assets/images/friend.png'
