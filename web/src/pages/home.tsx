@@ -1,4 +1,4 @@
-import LeftBarHome from '@/containers/left-section/LeftBarHome'
+import LeftBarHome from '@/features/home/components/left-section/LeftBarHome'
 import Stories from '@/features/home/components/stories/Stories'
 import RightSection from '@/features/home/components/right-section/RightSection'
 import PostList from '@/features/home/containers/PostList'
@@ -15,7 +15,7 @@ export default function Home() {
         <PostHeader />
         <PostList />
       </div>
-      <div className="hidden pt-4 lg:col-span-3 lg:grid lg:justify-items-stretch xl:col-span-2">
+      <div className="hidden lg:col-span-3 lg:grid lg:justify-items-stretch xl:col-span-2">
         <RightSection />
       </div>
     </div>

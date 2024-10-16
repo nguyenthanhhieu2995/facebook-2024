@@ -1,6 +1,5 @@
 import Home from '@/pages/home'
 import NotFound from '@/pages/not-found'
-import Groups from '@/pages/groups'
 import Gaming from '@/pages/gaming'
 import Marketplace from '@/pages/market-place'
 import MarketplaceNotifications from '@/pages/market-place-notifications'
@@ -15,12 +14,13 @@ import FullLayout from '@/layouts/FullLayout'
 import MinimizeLayout from '@/layouts/MinimizeLayout'
 import { Navigate } from 'react-router-dom'
 import MarketplaceLayout from '@/layouts/MarketPlaceLayout'
-import FriendsLayout from '@/layouts/FriendsLayout'
 import Friends from '@/pages/friends'
 import IdentifyAccount from '@/pages/IdentifyAccount'
 import LoginLayout from '@/layouts/LoginLayout'
 import ResetPassword from '@/pages/resetPassword'
 import NewPassword from '@/pages/newPassword'
+import FriendsLayout from '@/layouts/FriendsLayout'
+import GroupsLayout from '@/layouts/GroupsLayout'
 const routes = [
   {
     element: <AuthGuard />,
@@ -38,7 +38,7 @@ const routes = [
           },
           {
             path: '/groups',
-            element: <Groups />,
+            element: <GroupsLayout />,
             children: [
               {
                 path: '/groups/feed',

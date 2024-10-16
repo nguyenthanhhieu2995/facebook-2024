@@ -13,7 +13,7 @@ export default function FullLayout() {
   return (
     <div>
       <div className="fixed left-0 z-10 w-dvw">
-        <Header />
+        <Header  />
       </div>
       <div className="pt-14">
         <Outlet context={{ me: data }} />

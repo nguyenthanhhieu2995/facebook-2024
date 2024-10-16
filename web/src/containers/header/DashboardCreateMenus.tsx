@@ -8,7 +8,11 @@ import { CreateItem } from './MenuItem'
 import { useGetMe } from '@/hooks/useGetMe'
 import { memo } from 'react'
 
-function DashboardCreateMenus() {
+interface DashboardCreateMenusProps {
+  onSelect?: () => void
+}
+
+function DashboardCreateMenus({onSelect}: DashboardCreateMenusProps) {
   const CREATE_MENUS = [
     {
       title: 'Post',
@@ -50,6 +54,8 @@ function DashboardCreateMenus() {
   ]
 
   const { data } = useGetMe()
+  
+
   const navigate = useNavigate()
   return (
     <div className="flex flex-col">
@@ -58,9 +64,9 @@ function DashboardCreateMenus() {
           <div key={menu.title} className="flex flex-col" onClick={menu.click}>
             {index === 4 && <div className="mx-4 my-2 h-[1px] border-0 bg-gray-300"></div>}
             {menu.title === 'Post' ? (
-              <CreatePost data={data} trigger={<CreateItem {...menu} />} />
+              <CreatePost data={data} trigger={<CreateItem {...menu} onSelect={onSelect}  />} />
             ) : (
-              <CreateItem {...menu} />
+              <CreateItem {...menu} onSelect={onSelect} />
             )}
           </div>
         )

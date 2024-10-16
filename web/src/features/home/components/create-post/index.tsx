@@ -25,22 +25,16 @@ export enum PostAudienceOptions {
   Setting
 }
 
-
-function CreatePost({ trigger}: CreatePostProps) {
+function CreatePost({ trigger, data }: CreatePostProps) {
   const setPosition = usePositionStore(state => state.setPosition)
   const position = usePositionStore(state => state.position)
   const PostContent = {
-    [Position.Root]: <CreatePostDefault />,
+    [Position.Root]: <CreatePostDefault data={data} />,
     [Position.TagPeople]: <TagPeople onBack={() => setPosition(Position.Root)} />,
     [Position.FeelingActivity]: <FeelingActivity onBack={() => setPosition(Position.Root)} />,
     [Position.Gif]: <Gif onBack={() => setPosition(Position.Root)} />,
     [Position.CheckIn]: <CheckIn onBack={() => setPosition(Position.Root)} />,
-    [Position.ShowMore]: (
-      <ShowMore
-        onBack={() => setPosition(Position.Root)}
-        
-      />
-    ),
+    [Position.ShowMore]: <ShowMore onBack={() => setPosition(Position.Root)} />,
     [Position.PostAudience]: (
       <PostAudience
         onBack={() => {

@@ -58,7 +58,10 @@ export const POST_OPTIONS = [
 
 export type AddPostInputs = z.infer<typeof createPostSchema>
 
-export const CreatePostDefault = () => {
+interface CreatePostDefaultProps {
+  data: User | undefined 
+}
+export const CreatePostDefault = ({data} : CreatePostDefaultProps) => {
   const [isOpenAddPhoto, setIsOpenAddPhoto] = useState(false)
   const setPosition = usePositionStore(state => state.setPosition)
   const textContentCreatePost = usePositionStore(state => state.textContentCreatePost)
@@ -72,7 +75,7 @@ export const CreatePostDefault = () => {
     }
   })
   
-  const { me } = useOutletContext<{ me: User }>()
+  //const { me } = useOutletContext<{ me: User }>()
 
   const watchedContent = watch('content')
   const watchedImage = watch('images')
@@ -89,13 +92,12 @@ export const CreatePostDefault = () => {
     const url = await uploadImage(file)
     setValue('images', [url])
   }
-  console.log(textContentCreatePost)
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <DialogHeader>
         <DialogTitle className="pb-3">Create post</DialogTitle>
         <div className="border-b border-gray-300"></div>
-        <UserInfo onClick={() => setPosition(Position.PostAudience)} />
+        <UserInfo data={data} onClick={() => setPosition(Position.PostAudience)} />
       </DialogHeader>
       <DialogDescription>
         <div className={cn('group relative h-[155px] cursor-text px-4', { 'h-fit': isOpenAddPhoto })}>
@@ -103,7 +105,7 @@ export const CreatePostDefault = () => {
             className={cn('w-full resize-none text-2xl text-black outline-none placeholder:text-gray-700', {
               'text-base': isOpenAddPhoto
             })}
-            placeholder={`What's on your mind, ${me?.fullName}?`}
+            placeholder={`What's on your mind, ${data?.fullName}?`}
             {...register('content')}
             value={textContentCreatePost}
             onChange={e => setTextContentCreatePost(e.target.value)}

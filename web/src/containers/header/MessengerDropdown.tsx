@@ -6,7 +6,7 @@ import FeatureIconV3 from '@/components/feature-icons/FeatureIconV3'
 import FeatureIconV9 from '@/components/feature-icons/FeatureIconV9'
 import Search from '@/components/Search'
 
-function MessengerMenu() {
+function MessengerDropdown() {
   const [View, setView] = useState({ inbox: true, notRead: false })
   return (
     <div className="b w-90 overflow-hidden rounded-xl bg-white p-2 pr-0 text-sm font-semibold text-gray-900">
@@ -67,4 +67,4 @@ function MessengerMenu() {
   )
 }
 
-export default MessengerMenu
+export default MessengerDropdown

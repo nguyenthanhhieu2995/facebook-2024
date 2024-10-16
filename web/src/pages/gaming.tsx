@@ -1,4 +1,4 @@
-import LeftBarGroups from '@/containers/left-section/LeftBarGroups'
+import LeftBarGroups from '@/features/groups/left-section/LeftBarGroups'
 import { Outlet } from 'react-router-dom'
 
 export default function Gaming() {

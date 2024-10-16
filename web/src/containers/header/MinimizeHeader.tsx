@@ -1,4 +1,4 @@
-import HeaderMenu from './HeaderMenu'
+import HeaderMenu from './RightHeaderMenu'
 
 export default function MinimizeHeader() {
   return (

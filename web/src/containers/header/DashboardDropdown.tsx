@@ -1,4 +1,3 @@
-
 import FeatureIconV10 from '@/components/feature-icons/FeatureIconV10'
 
 import NewFeed from '@/assets/images/news-feed.png'
@@ -65,7 +64,11 @@ export const ENTERTAINMENT_MENUS = [
   }
 ]
 
-function DashboardMenu() {
+interface DashboardDropdownProps {
+  onSelect?: () => void
+}
+
+function DashboardDropdown({onSelect}: DashboardDropdownProps) {
   const [searchValue, setSearchValue] = useState('')
   let FilterSocialMenu = SOCIAL_MENUS.filter(menu => menu.title.toLowerCase().includes(searchValue.toLowerCase()))
   let FilterEntertainmentMenu = ENTERTAINMENT_MENUS.filter(menu =>
@@ -89,17 +92,17 @@ function DashboardMenu() {
           </div>
           <h3 className="px-4 text-base font-semibold">Social</h3>
           {FilterSocialMenu.map(menu => (
-            <MenuItem key={menu.title} {...menu} />
+            <MenuItem key={menu.title} {...menu} onSelect={onSelect} />
           ))}
           <div className="mx-4 my-3 h-[1px] bg-gray-300" />
           {FilterEntertainmentMenu.map(menu => (
-            <MenuItem key={menu.title} {...menu} />
+            <MenuItem key={menu.title} {...menu} onSelect={onSelect} />
           ))}
         </div>
         <div className="absolute left-2/3 mx-1 w-50 -translate-x-5 translate-y-1 overflow-auto rounded-xl bg-white shadow-thin">
           <div className="right-0 top-0 h-fit pb-2">
             <h2 className="px-4 py-2 text-xl font-bold">Create</h2>
-            <DashboardCreateMenus/>
+            <DashboardCreateMenus onSelect={onSelect} />
           </div>
         </div>
       </div>
@@ -107,4 +110,4 @@ function DashboardMenu() {
   )
 }
 
-export default DashboardMenu
+export default DashboardDropdown

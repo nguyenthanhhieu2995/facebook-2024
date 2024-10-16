@@ -1,4 +1,4 @@
-import LeftBarMarketPlace from '@/containers/left-section/LeftBarMarketPlace'
+import LeftBarMarketPlace from '@/features/market-place/left-section/LeftBarMarketPlace'
 import { Outlet } from 'react-router-dom'
 
 export default function MarketplaceLayout() {

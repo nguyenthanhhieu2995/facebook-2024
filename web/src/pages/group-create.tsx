@@ -1,5 +1,5 @@
 import DesktopPreview from '@/components/DesktopPreview'
-import LeftBarGroupsCreate from '@/containers/left-section/LeftBarGroupsCreate'
+import LeftBarGroupsCreate from '@/features/groups/left-section/LeftBarGroupsCreate'
 
 export default function GroupCreate() {
   return (

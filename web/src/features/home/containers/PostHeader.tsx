@@ -13,7 +13,7 @@ function PostHeader() {
   const textContentCreatePost = usePositionStore(state => state.textContentCreatePost)
   const setPosition = usePositionStore(state => state.setPosition)
   return (
-    <div className={'w-125 justify-self-center rounded-lg bg-white px-4 pb-2.5 pt-3 shadow-md'}>
+    <div className="w-125 justify-self-center rounded-lg bg-white px-4 pb-2.5 pt-3 shadow-md">
       <div className="flex items-center gap-2 text-lg">
         <Avatar className="size-10 cursor-pointer">
           <AvatarImage src={me?.avatar} />
@@ -28,7 +28,9 @@ function PostHeader() {
               className="flex w-full min-w-72 justify-start rounded-full p-2.5 text-lg font-normal text-gray-500"
               variant="secondary"
             >
-              <p className="pl-2">{textContentCreatePost ? textContentCreatePost : `${me?.fullName}, what's on your mind?`}</p>
+              <p className="pl-2">
+                {textContentCreatePost ? textContentCreatePost : `${me?.fullName}, what's on your mind?`}
+              </p>
             </Button>
           }
         />

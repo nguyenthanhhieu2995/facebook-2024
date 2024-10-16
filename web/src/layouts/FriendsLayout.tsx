@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import LeftBarFriends from '@/containers/left-section/LeftBarFriends'
+import LeftBarFriends from '@/features/friends/left-section/LeftBarFriends'
 
 export default function FriendsLayout() {
   return (
