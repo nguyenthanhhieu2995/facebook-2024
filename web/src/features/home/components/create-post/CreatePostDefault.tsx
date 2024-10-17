@@ -21,7 +21,6 @@ import { useForm } from 'react-hook-form'
 import { uploadImage } from '@/helpers/uploadImage'
 import { User } from '@/apis/user'
 
-
 export const POST_OPTIONS = [
   {
     icon: <Image src={picture} alt={picture} />,
@@ -58,9 +57,9 @@ export const POST_OPTIONS = [
 export type AddPostInputs = z.infer<typeof createPostSchema>
 
 interface CreatePostDefaultProps {
-  data: User | undefined 
+  data: User | undefined
 }
-export const CreatePostDefault = ({data} : CreatePostDefaultProps) => {
+export const CreatePostDefault = ({ data }: CreatePostDefaultProps) => {
   const [isOpenAddPhoto, setIsOpenAddPhoto] = useState(false)
   const setPosition = usePositionStore(state => state.setPosition)
   const textContentCreatePost = usePositionStore(state => state.textContentCreatePost)
@@ -73,17 +72,13 @@ export const CreatePostDefault = ({data} : CreatePostDefaultProps) => {
       images: []
     }
   })
-  
-  //const { me } = useOutletContext<{ me: User }>()
 
   const watchedContent = watch('content')
   const watchedImage = watch('images')
 
   const isDisabledSubmitButton = watchedContent === '' && watchedImage.length === 0
 
-  const onSubmit = async (data: AddPostInputs) => {
-    console.log(data)
-  }
+  const onSubmit = async () => {}
 
   const onUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -164,7 +159,7 @@ export const CreatePostDefault = ({data} : CreatePostDefaultProps) => {
         </div>
       </div>
       <DialogFooter className="mx-4 pb-2">
-        <Button className="w-full" variant={isDisabledSubmitButton ? 'disabled' : "default"} >
+        <Button className="w-full" variant={isDisabledSubmitButton ? 'disabled' : 'default'}>
           Post
         </Button>
       </DialogFooter>

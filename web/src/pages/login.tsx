@@ -12,6 +12,7 @@ import { useMutation } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 export type LoginInputs = z.infer<typeof loginSchema>
 
 export default function Login() {
@@ -32,12 +33,13 @@ export default function Login() {
   const {
     register,
     handleSubmit,
+    setFocus,
     formState: { errors }
   } = useForm<LoginInputs>({
     mode: 'onBlur',
     resolver: zodResolver(loginSchema)
   })
-
+  useEffect(() => setFocus('email'), [setFocus])
   const onSubmit: SubmitHandler<LoginInputs> = async (data: LoginInputs) =>
     mutation.mutate({
       email: data.email,
@@ -52,7 +54,7 @@ export default function Login() {
           <p className="text-2xl font-medium">Connect with friends and the world around you on Facebook.</p>
         </div>
         <div className="flex flex-col items-center">
-          <div className="mb-12 w-fit rounded-xl bg-white shadow-lg">
+          <div className="mb-6 w-fit rounded-xl bg-white shadow-thin">
             <form className="w-fit space-y-3 p-4" onSubmit={handleSubmit(onSubmit)}>
               <Input
                 {...register('email')}
@@ -78,6 +80,9 @@ export default function Login() {
               <RegisterButton />
             </div>
           </div>
+          <p className='mb-6  font-semibold'>
+            demo account: <span className='text-red-500'>nguyenthanhhieu2995@gmail.com / abc123</span>
+          </p>
           <p className="font-primary text-center">
             Create a Page
             <span className="font-semibold"> for a celebrity, brand or business. </span>
