@@ -20,6 +20,9 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { uploadImage } from '@/helpers/uploadImage'
 import { User } from '@/apis/user'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { createPost } from '@/apis/post'
+import { toast } from 'sonner'
 
 export const POST_OPTIONS = [
   {
@@ -58,12 +61,24 @@ export type AddPostInputs = z.infer<typeof createPostSchema>
 
 interface CreatePostDefaultProps {
   data: User | undefined
+  onSuccess: () => void
 }
-export const CreatePostDefault = ({ data }: CreatePostDefaultProps) => {
+export const CreatePostDefault = ({ onSuccess, data }: CreatePostDefaultProps) => {
   const [isOpenAddPhoto, setIsOpenAddPhoto] = useState(false)
   const setPosition = usePositionStore(state => state.setPosition)
-  const textContentCreatePost = usePositionStore(state => state.textContentCreatePost)
   const setTextContentCreatePost = usePositionStore(state => state.setTextContentCreatePost)
+  const queryClient = useQueryClient()
+
+  const createPostMutation = useMutation({
+    mutationFn: createPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
+      toast.success('Create post successfully')
+      onSuccess()
+      setTextContentCreatePost('')
+    }
+  })
+
   const { register, handleSubmit, watch, setValue } = useForm<AddPostInputs>({
     mode: 'onBlur',
     resolver: zodResolver(createPostSchema),
@@ -75,16 +90,18 @@ export const CreatePostDefault = ({ data }: CreatePostDefaultProps) => {
 
   const watchedContent = watch('content')
   const watchedImage = watch('images')
+  console.log(watchedContent)
 
-  const isDisabledSubmitButton = watchedContent === '' && watchedImage.length === 0
+  const isDisabledSubmitButton = watchedContent === ''
+  const onSubmit = async (data: AddPostInputs) => {
+    await createPostMutation.mutateAsync(data)
+  }
 
-  const onSubmit = async () => {}
-
-  const onUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const url = await uploadImage(file)
-    setValue('images', [url])
+  const onUploadImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files) return
+    const urls = await Promise.all([...files].map(uploadImage))
+    setValue('images', urls)
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -100,9 +117,8 @@ export const CreatePostDefault = ({ data }: CreatePostDefaultProps) => {
               'text-base': isOpenAddPhoto
             })}
             placeholder={`What's on your mind, ${data?.fullName}?`}
-            {...register('content')}
-            value={textContentCreatePost}
-            onChange={e => setTextContentCreatePost(e.target.value)}
+            {...register('content',{
+              onChange: e => setTextContentCreatePost(e.target.value)})}
           />
           {!isOpenAddPhoto && (
             <div className="absolute bottom-0 left-3 cursor-pointer">
@@ -117,7 +133,7 @@ export const CreatePostDefault = ({ data }: CreatePostDefaultProps) => {
         </div>
       </DialogDescription>
       {isOpenAddPhoto && (
-        <AddPhoto value={watchedImage} onChange={onUploadImage} onClose={() => setIsOpenAddPhoto(false)} />
+        <AddPhoto value={watchedImage} onChange={onUploadImages} onClose={() => setIsOpenAddPhoto(false)} />
       )}
       <div className="mx-4 mb-4 flex items-center justify-between rounded-lg border border-gray-400 px-4 py-2">
         <div className="cursor-pointer font-semibold text-black" onClick={() => setPosition(Position.ShowMore)}>

@@ -21,7 +21,7 @@ export interface Post {
 
 interface CreatePostDto {
   content: string
-  title: string
+  images: string[]
 }
 
 export const getPosts = async ({ pageParam }: { pageParam: number }) => {
@@ -30,6 +30,6 @@ export const getPosts = async ({ pageParam }: { pageParam: number }) => {
 }
 
 export const createPost = async (data: CreatePostDto) => {
-  const res = await request.post('/posts', data)
+  const res = await request.post<Post>('/posts', data)
   return res.data
 }

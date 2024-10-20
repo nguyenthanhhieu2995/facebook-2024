@@ -10,10 +10,11 @@ import { Position, usePositionStore } from '@/features/home/stores/position'
 import { CreatePostDefault } from './CreatePostDefault'
 import { DialogProps } from '@radix-ui/react-dialog'
 
+
 interface CreatePostProps extends DialogProps {
   data: User | undefined
   isAddPhoto?: boolean
-  onCreatePostSuccess?: () => void
+  onCreatePostSuccess: () => void
   currentPosition?: Position
 }
 
@@ -26,11 +27,11 @@ export enum PostAudienceOptions {
   Setting
 }
 
-function CreatePost({ open, onOpenChange, data }: CreatePostProps) {
+function CreatePost({ open, onOpenChange, data, onCreatePostSuccess }: CreatePostProps) {
   const setPosition = usePositionStore(state => state.setPosition)
   const position = usePositionStore(state => state.position)
   const PostContent = {
-    [Position.Root]: <CreatePostDefault data={data} />,
+    [Position.Root]: <CreatePostDefault data={data} onSuccess={onCreatePostSuccess} />,
     [Position.TagPeople]: <TagPeople onBack={() => setPosition(Position.Root)} />,
     [Position.FeelingActivity]: <FeelingActivity onBack={() => setPosition(Position.Root)} />,
     [Position.Gif]: <Gif onBack={() => setPosition(Position.Root)} />,

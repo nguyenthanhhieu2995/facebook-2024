@@ -5,14 +5,33 @@ export class PostsService {
     const items = await prisma.post.findMany({
       skip: (page - 1) * limit,
       take: limit,
+      orderBy: {
+        createdAt: "desc",
+      }
     });
-    const total = await prisma.post.count();
+    const total = prisma.post.count();
     return { items, total, page, limit };
   }
 
   static async createPost(data: Prisma.PostCreateInput) {
     return prisma.post.create({
       data,
+    });
+  }
+
+  static getPostById(id: string) {
+    return prisma.post.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  static deletePost(id: string) {
+    return prisma.post.delete({
+      where: {
+        id,
+      },
     });
   }
 }

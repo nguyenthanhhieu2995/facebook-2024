@@ -15,6 +15,7 @@ model User {
     password  String
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
+    posts     Post[]
 
     @@map("user")
 }
@@ -29,11 +30,14 @@ model Comment {
 }
 
 model Post {
-    id      String @id @default(cuid())
-    content String
-    likes   Int    @default(0)
+    id        String   @id @default(cuid())
+    content   String
+    likes     Int      @default(0)
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
+
+    ownerId String? @map("owner_id")
+    owner   User?   @relation(fields: [ownerId], references: [id])
 
     @@map("post")
 }
