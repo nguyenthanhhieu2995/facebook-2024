@@ -6,6 +6,7 @@ import * as FeatureIcon from '@/components/feature-icons'
 import Search from '@/components/Search'
 import AccountItem from './AccountItem'
 import { removeToken } from '@/helpers/token'
+import Image from '@/components/Image'
 
 enum Position {
   root,
@@ -31,12 +32,7 @@ function AccountMenuContent({ username, avatar }: AccountMenuContentProps) {
         <div className="mt-1 flex cursor-pointer flex-col">
           <div className="mb-4 rounded-lg border border-gray-200 shadow-xl">
             <div className="m-1 flex items-center gap-2 rounded-md p-2 hover:bg-gray-200">
-              <Avatar className="size-10">
-                <AvatarImage src={avatar} />
-                <AvatarFallback>
-                  <span className="sr-only">Loading...</span>
-                </AvatarFallback>
-              </Avatar>
+            <Image src={avatar} alt="User Avatar" className="size-10 object-cover rounded-full" />
               <p>{username}</p>
             </div>
             <div className="mx-2 h-[1.5px] bg-gray-300"></div>

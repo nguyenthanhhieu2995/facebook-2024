@@ -1,7 +1,7 @@
 import FeatureIconsImagev19 from '../../assets/images/feature-icon-v19.png'
 import { cn } from '../../utils/cn'
 interface FeatureIconProps {
-  name: 'Bell' | 'HomeGood'
+  name: 'Bell' | 'HomeGood' 
   size?: string
 }
 function FeatureIconV19({ name, size }: FeatureIconProps) {
@@ -12,6 +12,7 @@ function FeatureIconV19({ name, size }: FeatureIconProps) {
     HomeGood: {
       backgroundPosition: '0px -398px'
     }
+
   }
   return (
     <i

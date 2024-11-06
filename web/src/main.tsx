@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import routes from './routes/routes'
 import { Toaster } from 'sonner'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
 const router = createBrowserRouter(routes)
 
 const queryClient = new QueryClient({

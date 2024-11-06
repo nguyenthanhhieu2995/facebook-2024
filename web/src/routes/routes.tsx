@@ -1,6 +1,6 @@
 import Home from '@/pages/home'
 import NotFound from '@/pages/not-found'
-import Gaming from '@/pages/gaming'
+import GamingLayout from '@/layouts/GamingLayout'
 import Marketplace from '@/pages/market-place'
 import MarketplaceNotifications from '@/pages/market-place-notifications'
 import MarketplaceInbox from '@/pages/market-place-inbox'
@@ -21,6 +21,11 @@ import ResetPassword from '@/pages/resetPassword'
 import NewPassword from '@/pages/newPassword'
 import FriendsLayout from '@/layouts/FriendsLayout'
 import GroupsLayout from '@/layouts/GroupsLayout'
+import PlayGames from '@/pages/play-games'
+import GamingActivity from '@/pages/gaming-activity'
+import GamingNotifications from '@/pages/gaming-notification'
+import Me from '@/pages/me'
+
 const routes = [
   {
     element: <AuthGuard />,
@@ -31,6 +36,10 @@ const routes = [
           {
             path: '/',
             element: <Home />
+          },
+          {
+            path:'/:id',
+            element: <Me />
           },
           {
             path: '/groups',
@@ -56,7 +65,21 @@ const routes = [
           },
           {
             path: '/gaming',
-            element: <Gaming />
+            element: <GamingLayout />,
+            children: [
+              {
+                path: '/gaming/play',
+                element: <PlayGames />
+              },
+              {
+                path: '/gaming/me',
+                element: <GamingActivity/>
+              },
+              {
+                path: '/gaming/notifications',
+                element: <GamingNotifications />
+              }
+            ]
           },
           {
             path: '/notifications',

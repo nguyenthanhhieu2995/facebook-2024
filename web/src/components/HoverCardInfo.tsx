@@ -10,6 +10,7 @@ import { cn } from '@/utils/cn'
 import { Button } from './ui/button'
 import Image from './Image'
 import { useGetMe } from '@/hooks/useGetMe'
+import { User } from '@/apis/user'
 
 const PROFILE_DETAILS = [
   { title: 'info', type: 'Page', content: 'News & media website', icon: <Image src={info} alt={'info'} /> },
@@ -28,23 +29,18 @@ const PROFILE_DETAILS = [
 
 interface HoverCardInfoProps {
   trigger: React.ReactNode
+  owner: User
 }
 
-export default function HoverCardInfo({ trigger }: HoverCardInfoProps) {
-  const { data } = useGetMe()
+export default function HoverCardInfo({ trigger, owner }: HoverCardInfoProps) {
   return (
     <HoverCard>
       <HoverCardTrigger>{trigger}</HoverCardTrigger>
       <HoverCardContent className="w-[400px] p-4">
         <div className="flex gap-4 px-3 py-2">
-          <Avatar className="size-24 cursor-pointer">
-            <AvatarImage src={data?.avatar} />
-            <AvatarFallback>
-              <span className="sr-only">Loading...</span>
-            </AvatarFallback>
-          </Avatar>
+        <Image src={owner?.avatar} alt="User Avatar" className="size-24 rounded-full object-cover" />
           <div>
-            <h1 className="pb-4 text-2xl font-bold">Son Tung</h1>
+            <h1 className="pb-4 text-2xl font-bold">{owner?.firstName+' '+owner?.lastName}</h1>
             {PROFILE_DETAILS.map(profile => (
               <div key={profile.title} className="my-2 flex items-center gap-2">
                 <div>{profile.icon}</div>

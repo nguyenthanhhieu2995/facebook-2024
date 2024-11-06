@@ -1,5 +1,6 @@
 import { Spin } from '../assets/svgs'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import Image from './Image'
+import { Avatar} from './ui/avatar'
 
 interface PageItemUserProps {
   avatar?: string
@@ -11,10 +12,7 @@ function PageUserItem({ avatar }: PageItemUserProps) {
       <div className="relative">
         <Spin className="size-9 text-gray-500 transition duration-500 group-hover:animate-spint-once" />
         <Avatar className="absolute left-1/2 top-1/2 size-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white">
-          <AvatarImage src={avatar} />
-          <AvatarFallback>
-            <span className="sr-only">Loading...</span>
-          </AvatarFallback>
+            <Image src={avatar} alt="User Avatar" className="size-7 rounded-full object-cover" />
         </Avatar>
       </div>
       <p>John Doe</p>

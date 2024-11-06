@@ -116,9 +116,10 @@ export const CreatePostDefault = ({ onSuccess, data }: CreatePostDefaultProps) =
             className={cn('w-full resize-none text-2xl text-black outline-none placeholder:text-gray-700', {
               'text-base': isOpenAddPhoto
             })}
-            placeholder={`What's on your mind, ${data?.fullName}?`}
-            {...register('content',{
-              onChange: e => setTextContentCreatePost(e.target.value)})}
+            placeholder={`What's on your mind, ${data?.firstName + ' ' + data?.lastName}?`}
+            {...register('content', {
+              onChange: e => setTextContentCreatePost(e.target.value)
+            })}
           />
           {!isOpenAddPhoto && (
             <div className="absolute bottom-0 left-3 cursor-pointer">
@@ -133,7 +134,14 @@ export const CreatePostDefault = ({ onSuccess, data }: CreatePostDefaultProps) =
         </div>
       </DialogDescription>
       {isOpenAddPhoto && (
-        <AddPhoto value={watchedImage} onChange={onUploadImages} onClose={() => setIsOpenAddPhoto(false)} />
+        <AddPhoto
+          value={watchedImage}
+          onChange={onUploadImages}
+          onClose={() => {
+            setIsOpenAddPhoto(false)
+            setValue('images', [])
+          }}
+        />
       )}
       <div className="mx-4 mb-4 flex items-center justify-between rounded-lg border border-gray-400 px-4 py-2">
         <div className="cursor-pointer font-semibold text-black" onClick={() => setPosition(Position.ShowMore)}>

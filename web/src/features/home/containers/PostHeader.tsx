@@ -4,7 +4,6 @@ import smile from '@/assets/images/smile.png'
 import { Button } from '@/components/ui/button'
 import picture from '@/assets/images/picture.png'
 import CreatePost from '../components/create-post'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useOutletContext } from 'react-router-dom'
 import { User } from '@/apis/user'
 import { Position, usePositionStore } from '@/features/home/stores/position'
@@ -17,19 +16,14 @@ function PostHeader() {
   return (
     <div className="w-125 justify-self-center rounded-lg bg-white px-4 pb-2.5 pt-3 shadow-md">
       <div className="flex items-center gap-2 text-lg">
-        <Avatar className="size-10 cursor-pointer">
-          <AvatarImage src={me?.avatar} />
-          <AvatarFallback>
-            <span className="sr-only">Loading...</span>
-          </AvatarFallback>
-        </Avatar>
+      <Image src={me?.avatar} alt="User Avatar" className="size-10 object-cover rounded-full" />
         <Button
           className="flex w-full min-w-72 justify-start rounded-full p-2.5 text-lg font-normal text-gray-500"
           variant="secondary"
           onClick={onOpenCreatePost}
         >
           <p className="pl-2">
-            {textContentCreatePost ? textContentCreatePost : `${me?.fullName}, what's on your mind?`}
+            {textContentCreatePost ? textContentCreatePost : `${me?.firstName} ${me?.lastName}, what's on your mind?`}
           </p>
         </Button>
       </div>

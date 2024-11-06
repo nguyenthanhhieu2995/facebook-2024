@@ -8,13 +8,11 @@ import {
 import { render } from "@react-email/components";
 import { ForgotPassword } from "@/emails/forgot-password";
 import { mailService } from "@/helpers/email";
-import { Prisma, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { redisService } from "@/helpers/redis";
 import { generateOpaqueToken } from "@/helpers/token";
 import { UnauthorizedException } from "@/lib/exceptions";
-import { hashPassword } from "@/helpers/password";
-import { UsersService } from "../users/users.service";
-import { errorMessages, successMessages } from "@/lib/messages";
+
 
 export class AuthService {
   static createAccessToken({ userId }: { userId: string }) {

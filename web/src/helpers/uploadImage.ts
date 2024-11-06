@@ -3,7 +3,7 @@ export const uploadImage = async (file: File) => {
     formData.append('file', file)
     formData.append('upload_preset', 'facebook')
   
-    const uploadResponse = await fetch('https://api.cloudinary.com/v1_1/dngufpubq/image/upload', {
+    const uploadResponse = await fetch('https://api.cloudinary.com/v1_1/dx1jngfdn/image/upload', {
       method: 'POST',
       body: formData
     })

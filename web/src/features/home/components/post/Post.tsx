@@ -1,22 +1,29 @@
 import { Ellipsis, X, MessageSquare, ThumbsUp, MessageSquareShare } from 'lucide-react'
 import Like from '@/assets/svgs/like.svg?react'
 import Heart from '@/assets/svgs/heart.svg?react'
-import avatar from '@/assets/images/avatar.jpeg'
 import HoverCardInfo from '@/components/HoverCardInfo'
 import PopoverMoreMenu from '@/features/groups/components/PopoverMoreMenu'
 import { Button } from '@/components/ui/button'
 import Image from '@/components/Image'
-import { useOutletContext } from 'react-router-dom'
-import { User } from '@/apis/user'
-import { type Post as IPost } from '@/apis/post'
+
+import { likePost, type Post as IPost } from '@/apis/post'
 import Comment from './Comment'
 import { formatDistanceToNow } from 'date-fns'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 interface PostProps {
   post: IPost
 }
 
 function Post({ post }: PostProps) {
-  const { me } = useOutletContext<{ me: User }>()
+  const queryClient = useQueryClient()
+  const likeMutation = useMutation({
+    mutationFn: likePost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
+      toast.success('Like post successfully')
+    }
+  })
   const updatedAt = new Date(post.updatedAt)
   const distanceToNow = formatDistanceToNow(updatedAt, { addSuffix: true })
   return (
@@ -24,16 +31,27 @@ function Post({ post }: PostProps) {
       <div className="px-3 pt-4">
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <HoverCardInfo trigger={<Image src={me?.avatar} alt="User Avatar" className="size-10 rounded-full" />} />
+            <HoverCardInfo
+              owner={post.owner}
+              trigger={
+                <Image src={post.owner?.avatar} alt="User Avatar" className="size-10 rounded-full object-cover" />
+              }
+            />
             <div>
               <HoverCardInfo
-                trigger={<p className="cursor-pointer font-semibold text-gray-800 hover:underline">{me?.fullName}</p>}
+                owner={post.owner}
+                trigger={
+                  <p className="cursor-pointer font-semibold text-gray-800 hover:underline">
+                    {post.owner.firstName + ' ' + post.owner.lastName}
+                  </p>
+                }
               />
               <p className="cursor-pointer text-xs text-gray-700">Posted {distanceToNow}</p>
             </div>
           </div>
           <div className="cursor-pointer pr-1 text-gray-700">
             <PopoverMoreMenu
+              postId={post.id}
               trigger={
                 <Button className="rounded-full p-2" variant={'ghost'}>
                   <Ellipsis className="size-6" />
@@ -49,14 +67,12 @@ function Post({ post }: PostProps) {
           <p className="text-gray-800">{post.content}</p>
         </div>
       </div>
-      <div>
-        <Image src={avatar} alt="Post Image" className="w-full border-gray-300 object-cover" />
-      </div>
+      <div>{<Image src={post.image} alt="Post Image" className="max-h-80 w-full border-gray-300 object-cover" />}</div>
       <div className="flex items-center justify-between px-5 text-sm text-gray-700">
         <div className="flex cursor-pointer items-center justify-center">
           <Like className="z-10 -mr-1 size-5 rounded-full border-2 border-white" />
           <Heart className="size-5 rounded-full border-2 border-white" />
-          <p className="px-2"> {post.likes} Likes</p>
+          <p className="px-2"> {post.likes.length} Likes</p>
         </div>
         <div className="flex cursor-pointer items-center justify-center gap-1">
           <p> {post.comments?.length} Comments</p>
@@ -65,7 +81,12 @@ function Post({ post }: PostProps) {
       <div className="px-4">
         <div className="my-1 border-b border-gray-300" />
         <div className="flex justify-around children:flex children:grow children:items-center children:justify-center children:gap-1 children:font-semibold children:text-gray-600">
-          <Button className="hover:bg-gray-100" variant={'ghost'} size={'sm'}>
+          <Button
+            className="hover:bg-gray-100"
+            variant={'ghost'}
+            size={'sm'}
+            onClick={() => likeMutation.mutate(post.id)}
+          >
             <ThumbsUp className="size-5" />
             Like
           </Button>

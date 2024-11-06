@@ -12,32 +12,42 @@ model User {
     email     String   @unique
     firstName String?  @map("first_name")
     lastName  String?  @map("last_name")
+    avatar    String?
     password  String
+    posts     Post[]
+    likes      Like[]
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
-    posts     Post[]
 
     @@map("user")
 }
 
-model Comment {
-    id        String   @id @default(cuid())
-    content   String
-    createdAt DateTime @default(now()) @map("created_at")
-    updateAt  DateTime @updatedAt @map("updated_at")
-
-    @@map("comment")
-}
-
 model Post {
-    id        String   @id @default(cuid())
-    content   String
-    likes     Int      @default(0)
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
+    id      String @id @default(cuid())
+    content String
+    likes   Like[]
 
     ownerId String? @map("owner_id")
     owner   User?   @relation(fields: [ownerId], references: [id])
 
+    image String?
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
     @@map("post")
+}
+
+model Like {
+    id     String @id @default(cuid())
+    postId String @map("post_id")
+    post   Post   @relation(fields: [postId], references: [id])
+
+    userId String @map("user_id")
+    user   User   @relation(fields: [userId], references: [id])
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@map("like")
 }

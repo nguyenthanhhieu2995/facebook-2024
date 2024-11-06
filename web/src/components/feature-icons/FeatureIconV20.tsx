@@ -17,6 +17,7 @@ interface FeatureIconProps {
     | 'SportingGoods'
     | 'ToysAndGames'
     | 'Group'
+    |'AllGames'
   size?: string
 }
 function FeatureIconV20({ name, size }: FeatureIconProps) {
@@ -65,6 +66,9 @@ function FeatureIconV20({ name, size }: FeatureIconProps) {
     },
     Group: {
       backgroundPosition: '-285px -283px'
+    },
+    AllGames: {
+      backgroundPosition: '-238px -282px'
     }
   }
   return (

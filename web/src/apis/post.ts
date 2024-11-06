@@ -9,11 +9,20 @@ export interface Comment {
   user: User
 }
 
-export interface Post {
+export interface Like {
   id: number
+  createdAt: Date
+  updatedAt: Date
+  user: User
+}
+
+export interface Post {
+  id: string
   title: string
   content: string
-  likes: number
+  likes: Like[]
+  image?: string
+  owner: User
   comments: Comment[]
   createdAt: Date
   updatedAt: Date
@@ -31,5 +40,15 @@ export const getPosts = async ({ pageParam }: { pageParam: number }) => {
 
 export const createPost = async (data: CreatePostDto) => {
   const res = await request.post<Post>('/posts', data)
+  return res.data
+}
+
+export const deletePost = async (id: string) => {
+  const res = await request.delete(`/posts/${id}`)
+  return res.data
+}
+
+export const likePost = async (id: string) => {
+  const res = await request.put(`/posts/${id}/like`)
   return res.data
 }

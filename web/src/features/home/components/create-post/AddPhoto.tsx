@@ -3,6 +3,7 @@ import FeatureIconV4 from '@/components/feature-icons/FeatureIconV4'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { cn } from '@/utils/cn'
 import { X } from 'lucide-react'
 
 interface AddPhotoProps {
@@ -14,7 +15,10 @@ interface AddPhotoProps {
 export const AddPhoto = ({ onClose, onChange, value }: AddPhotoProps) => {
   return (
     <div className="mb-4 flex items-center justify-between px-4">
-      <div className="flex h-[270px] w-full flex-col gap-2 rounded-lg border border-gray-400 p-2">
+      <div className={cn('flex w-full flex-col gap-2 rounded-lg border border-gray-400 p-2', {
+          'h-80': !value.length,
+          'h-auto': value.length
+        })}>
         <Label
           htmlFor="photo"
           className="group relative h-3/4 w-full rounded-lg bg-gray-100 hover:bg-gray-200 has-[button:hover]:bg-gray-100"
@@ -27,7 +31,7 @@ export const AddPhoto = ({ onClose, onChange, value }: AddPhotoProps) => {
             <X size={20} onClick={onClose} />
           </Button>
           {value.length ? (
-            <img src={value[0]} alt="Post Image" className="h-full w-full rounded-lg object-cover" />
+            <img src={value[0]} alt="Post Image" className="h-full max-h-80 w-full rounded-lg object-cover" />
           ) : (
             <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
               <Input id="photo" type="file" className="hidden" onChange={onChange} />
