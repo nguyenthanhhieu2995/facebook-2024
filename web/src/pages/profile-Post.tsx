@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button'
-import Post from '@/features/home/components/post/Post'
 import PostHeader from '@/features/home/containers/PostHeader'
 import PostList from '@/features/home/containers/PostList'
 import { Home, Clock, MapPin, SlidersHorizontal, Settings, AlignJustify, Grid2X2 } from 'lucide-react'

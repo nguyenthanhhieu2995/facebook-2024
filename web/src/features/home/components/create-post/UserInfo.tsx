@@ -52,10 +52,10 @@ export default function UserInfo({ data, onClick }: UserInfoProps) {
   return (
     <div className="group relative my-3 flex flex-row items-center rounded-xl px-4 font-normal">
       <div className="flex-none">
-        <Image className="size-10 rounded-full" src={data?.avatar} alt={data ? data.fullName : ''} />
+        <Image className="size-10 rounded-full" src={data?.avatar} alt={data ? data.firstName+' '+data.lastName : ''} />
       </div>
       <div className="flex flex-col pl-2">
-        <h4 className="font-semibold text-black">{data?.fullName}</h4>
+        <h4 className="font-semibold text-black">{data?.firstName} {data?.lastName}</h4>
         <Button onClick={onClick} variant="secondary" size={'xs'} className="my-1 flex w-fit flex-row gap-1 p-1">
           <div className="size-4">{POST_AUDIENCE_OPTIONS[0].icon}</div>
           <p className="text-xs">{POST_AUDIENCE_OPTIONS[0].title}</p>

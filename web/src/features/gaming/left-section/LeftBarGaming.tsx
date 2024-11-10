@@ -1,5 +1,4 @@
 import FeatureIconV19 from "@/components/feature-icons/FeatureIconV19"
-import FeatureIconV20 from "@/components/feature-icons/FeatureIconV20"
 import FeatureIconV21 from "@/components/feature-icons/FeatureIconV21"
 import FeatureIconV3 from "@/components/feature-icons/FeatureIconV3"
 import Search from "@/components/Search"

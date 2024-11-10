@@ -6,8 +6,11 @@ import { Button } from '@/components/ui/button'
 import Image from '@/components/Image'
 import HoverCardInfo from '@/components/HoverCardInfo'
 import PopoverMoreMenu from '../components/PopoverMoreMenu'
+import { User } from '@/apis/user'
+import { useOutletContext } from 'react-router-dom'
 
 function YourFeedGroup() {
+  const {me} = useOutletContext<{ me: User }>()
   return (
     <div className="grid place-content-center">
       <div className='ml-4 xl:w-170 lg:w-152'>
@@ -16,9 +19,10 @@ function YourFeedGroup() {
           <div className="px-3 pt-4">
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <HoverCardInfo trigger={<Image src={avatar} alt="User Avatar" className="size-10 rounded-full" />} />
+                <HoverCardInfo owner={me} trigger={<Image src={avatar} alt="User Avatar" className="size-10 rounded-full" />} />
                 <div>
                   <HoverCardInfo
+                    owner={me}
                     trigger={<p className="cursor-pointer font-semibold text-gray-800 hover:underline">Son Tung</p>}
                   />
                   <p className="cursor-pointer text-xs text-gray-600">Posted 2 hours ago</p>
@@ -26,6 +30,7 @@ function YourFeedGroup() {
               </div>
               <div className="cursor-pointer pr-1 text-gray-600">
                 <PopoverMoreMenu
+                  postId='1'
                   trigger={
                     <Button className="rounded-full p-2" variant={'ghost'}>
                       <Ellipsis className="size-6" />

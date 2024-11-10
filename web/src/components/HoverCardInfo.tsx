@@ -36,9 +36,9 @@ export default function HoverCardInfo({ trigger, owner }: HoverCardInfoProps) {
       <HoverCardTrigger>{trigger}</HoverCardTrigger>
       <HoverCardContent className="w-[400px] p-4">
         <div className="flex gap-4 px-3 py-2">
-        <Image src={owner?.avatar} alt="User Avatar" className="size-24 rounded-full object-cover" />
+          <Image src={owner?.avatar} alt="User Avatar" className="size-24 rounded-full object-cover" />
           <div>
-            <h1 className="pb-4 text-2xl font-bold">{owner?.firstName+' '+owner?.lastName}</h1>
+            <h1 className="pb-4 text-2xl font-bold">{owner?.firstName + ' ' + owner?.lastName}</h1>
             {PROFILE_DETAILS.map(profile => (
               <div key={profile.title} className="my-2 flex items-center gap-2">
                 <div>{profile.icon}</div>
