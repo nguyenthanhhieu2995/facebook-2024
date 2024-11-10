@@ -1,4 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import PageUserItem from '@/components/PageUserItem'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
@@ -7,6 +6,7 @@ import Search from '@/components/Search'
 import AccountItem from './AccountItem'
 import { removeToken } from '@/helpers/token'
 import Image from '@/components/Image'
+import { useNavigate } from 'react-router-dom'
 
 enum Position {
   root,
@@ -24,6 +24,7 @@ interface AccountMenuContentProps {
 }
 
 function AccountMenuContent({ username, avatar }: AccountMenuContentProps) {
+  const navigate = useNavigate()
   const [position, setPosition] = useState(Position.root)
   const positions = {
     [Position.root]: {
@@ -31,7 +32,7 @@ function AccountMenuContent({ username, avatar }: AccountMenuContentProps) {
       component: (
         <div className="mt-1 flex cursor-pointer flex-col">
           <div className="mb-4 rounded-lg border border-gray-200 shadow-xl">
-            <div className="m-1 flex items-center gap-2 rounded-md p-2 hover:bg-gray-200">
+            <div className="m-1 flex items-center gap-2 rounded-md p-2 hover:bg-gray-200" onClick={() => navigate('/profile')}>
             <Image src={avatar} alt="User Avatar" className="size-10 object-cover rounded-full" />
               <p>{username}</p>
             </div>

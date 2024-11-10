@@ -10,7 +10,7 @@ export default function Home() {
       <div className="hidden justify-items-stretch xl:col-span-2 xl:grid">
         <LeftBarHome className="fixed w-1/5 flex-col justify-self-start pt-4 lg:w-1/4" />
       </div>
-      <div className="col-span-8 grid pt-4 lg:col-span-5 xl:col-span-4">
+      <div className="col-span-8 grid pt-4 lg:col-span-5 xl:col-span-4 gap-4">
         <Stories />
         <PostHeader />
         <PostList />

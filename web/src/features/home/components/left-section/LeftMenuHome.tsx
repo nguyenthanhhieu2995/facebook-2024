@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { cn } from '@/utils/cn'
 import Image from '@/components/Image'
 import climateScienceCenter from '@/assets/images/climate-center.png'
@@ -13,9 +13,9 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import NavbarIcon from '@/components/feature-icons/NavbarIcon'
 import FeatureIconV10 from '@/components/feature-icons/FeatureIconV10'
 import FeatureIconV12 from '@/components/feature-icons/FeatureIconV12'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useOutletContext } from 'react-router-dom'
 import { User } from '@/apis/user'
+
 
 interface NavbarProps {
   className?: string
@@ -23,21 +23,13 @@ interface NavbarProps {
 
 function LeftMenuHome({ className }: NavbarProps) {
   const [isToggle, setIsToggle] = useState(false)
-
   const { me } = useOutletContext<{ me: User }>()
 
   const MENUS = [
     {
-      label: me?.fullName,
-      link: '/',
-      icon: (
-        <Avatar className="size-10 cursor-pointer">
-          <AvatarImage src={me?.avatar} />
-          <AvatarFallback>
-            <span className="sr-only">Loading...</span>
-          </AvatarFallback>
-        </Avatar>
-      )
+      label: me?.firstName + ' ' + me?.lastName,
+      link: '/profile',
+      icon: <Image src={me?.avatar} alt="User Avatar" className="size-10 rounded-full object-cover" />,
     },
     { label: 'Friends', link: '/friends', icon: <NavbarIcon name="friends" /> },
     {
@@ -135,7 +127,7 @@ function LeftMenuHome({ className }: NavbarProps) {
           isHidden = true
         }
         return (
-          <div key={menu.link}>
+          <div key={menu.link} >
             <Link
               to={menu.link}
               className={cn('flex items-center gap-4 rounded-lg p-2 font-semibold hover:bg-gray-200', {

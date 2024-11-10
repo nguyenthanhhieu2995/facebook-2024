@@ -1,5 +1,4 @@
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import info from '@/assets/images/info.png'
 import user from '@/assets/images/user.png'
 import direction from '@/assets/images/direction.png'
@@ -9,7 +8,6 @@ import like from '@/assets/images/like.png'
 import { cn } from '@/utils/cn'
 import { Button } from './ui/button'
 import Image from './Image'
-import { useGetMe } from '@/hooks/useGetMe'
 import { User } from '@/apis/user'
 
 const PROFILE_DETAILS = [

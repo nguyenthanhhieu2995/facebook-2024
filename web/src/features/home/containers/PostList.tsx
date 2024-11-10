@@ -4,7 +4,7 @@ import { usePostList } from '../hooks/usePostList'
 function PostList() {
   const { posts, lastElementRef, isFetching } = usePostList()
   return (
-    <div className="my-4 justify-self-center">
+    <div className="justify-self-center">
       {posts?.map(post => (
         <div ref={lastElementRef} key={post.id}>
           <Post post={post} />

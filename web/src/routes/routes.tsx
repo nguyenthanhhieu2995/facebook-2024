@@ -24,7 +24,10 @@ import GroupsLayout from '@/layouts/GroupsLayout'
 import PlayGames from '@/pages/play-games'
 import GamingActivity from '@/pages/gaming-activity'
 import GamingNotifications from '@/pages/gaming-notification'
-import Me from '@/pages/me'
+import ProfileLayout from '@/layouts/ProfileLayout'
+import ProfilePosts from '@/pages/profile-Post'
+import ProfileAbout from '@/pages/profile-About'
+import ProfileFriends from '@/pages/profile-friends'
 
 const routes = [
   {
@@ -38,8 +41,22 @@ const routes = [
             element: <Home />
           },
           {
-            path:'/:id',
-            element: <Me />
+            path:'/profile',
+            element: <ProfileLayout />,
+            children: [
+              {
+                path: '/profile',
+                element: <ProfilePosts/>
+              },
+              {
+                path: '/profile/about',
+                element: <ProfileAbout />
+              },
+              {
+                path: '/profile/friends',
+                element: <ProfileFriends />
+              }
+            ]
           },
           {
             path: '/groups',
