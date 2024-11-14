@@ -145,7 +145,6 @@ router
     const authHeader = c.req.raw.headers.get("Authorization");
     const accessToken = authHeader?.split(" ")[1];
     const jwtObject = jwt.decode(accessToken) as { userId: string };
-    console.log(jwtObject);
     const userId = jwtObject?.userId;
     if (!userId || !refreshToken) {
       return c.json(

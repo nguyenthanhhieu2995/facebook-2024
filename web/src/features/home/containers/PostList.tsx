@@ -1,13 +1,14 @@
+
 import Post from '../components/post/Post'
 import { usePostList } from '../hooks/usePostList'
 
-function PostList() {
+function PostList({ className }: { className?: string }) {
   const { posts, lastElementRef, isFetching } = usePostList()
   return (
     <div className="justify-self-center">
       {posts?.map(post => (
         <div ref={lastElementRef} key={post.id}>
-          <Post post={post} />
+          <Post post={post} className={className} />
         </div>
       ))}
       {isFetching && (

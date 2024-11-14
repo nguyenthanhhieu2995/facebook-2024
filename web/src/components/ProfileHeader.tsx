@@ -34,9 +34,9 @@ export default function ProfileHeader() {
           Edit cover photo
         </Button>
       </Image>
-      <div className="z-10 mx-auto -mt-8 md:w-11/12 lg:w-5/6 xl:w-3/5 w-full">
-        <div className="grid grid-cols-5 gap-2 py-2">
-          <div className="size-42 relative">
+      <div className="z-10 mx-auto  md:w-11/12 lg:w-5/6 xl:w-3/5 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-5 place-items-center gap-2 py-2">
+          <div className="size-42 relative lg:-mt-8 -mt-24">
             <Image
               src={me?.avatar}
               alt="avatar"
@@ -50,13 +50,12 @@ export default function ProfileHeader() {
               <Camera />
             </Button>
           </div>
-          <div className="col-span-2 flex flex-col gap-2 md:pl-14 lg:pl-10 pt-14 xl:pl-4">
+          <div className="lg:col-span-2 grid lg:place-items-start place-items-center gap-2 lg:pt-8 xl:pl-4">
             <h1 className="text-4xl font-bold">{me?.firstName+" "+me?.lastName}</h1>
             <p className="text-sm font-semibold text-gray-600"> 512 friends </p>
-            <div>Images</div>
           </div>
 
-          <div className="col-span-2 flex items-center justify-end gap-2">
+          <div className="lg:col-span-2 flex items-center justify-end gap-2">
             <Button variant={'default'} className="flex items-center gap-1">
               <Plus size={16} />
               Add Story

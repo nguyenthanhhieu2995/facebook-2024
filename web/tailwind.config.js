@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+import animated from "tailwindcss-animated";
+import animate from "tailwindcss-animate";
 const plugin = require('tailwindcss/plugin')
 module.exports = {
   darkMode: ['class'],
@@ -148,8 +151,8 @@ module.exports = {
     }
   },
   plugins: [
-    require('tailwindcss-animate'),
-    require('tailwindcss-animated'),
+    animated,
+    animate,
     plugin(function ({ addVariant }) {
       addVariant('children', '&>*')
     })

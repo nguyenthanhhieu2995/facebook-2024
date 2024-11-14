@@ -17,7 +17,7 @@ import colorText from '@/assets/images/color-text.png'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createPostSchema } from '@/helpers/schema'
 import { z } from 'zod'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { uploadImage } from '@/helpers/uploadImage'
 import { User } from '@/apis/user'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -67,6 +67,7 @@ export const CreatePostDefault = ({ onSuccess, data }: CreatePostDefaultProps) =
   const [isOpenAddPhoto, setIsOpenAddPhoto] = useState(false)
   const setPosition = usePositionStore(state => state.setPosition)
   const setTextContentCreatePost = usePositionStore(state => state.setTextContentCreatePost)
+  const textContentCreatePost = usePositionStore(state => state.textContentCreatePost)
   const queryClient = useQueryClient()
 
   const createPostMutation = useMutation({
@@ -83,17 +84,16 @@ export const CreatePostDefault = ({ onSuccess, data }: CreatePostDefaultProps) =
     mode: 'onBlur',
     resolver: zodResolver(createPostSchema),
     defaultValues: {
-      content: '',
+      content: textContentCreatePost,
       images: []
     }
   })
 
   const watchedContent = watch('content')
   const watchedImage = watch('images')
-  console.log(watchedContent)
 
   const isDisabledSubmitButton = watchedContent === ''
-  const onSubmit = async (data: AddPostInputs) => {
+  const onSubmit: SubmitHandler<AddPostInputs> = async (data: AddPostInputs) => {
     await createPostMutation.mutateAsync(data)
   }
 
@@ -152,6 +152,7 @@ export const CreatePostDefault = ({ onSuccess, data }: CreatePostDefaultProps) =
             if (item.title === 'Photo/Video')
               return (
                 <Button
+                  type="button"
                   key={item.title}
                   variant={'ghost'}
                   size={'icon'}
@@ -165,6 +166,7 @@ export const CreatePostDefault = ({ onSuccess, data }: CreatePostDefaultProps) =
               )
             return (
               <Button
+                type="button"
                 key={item.title}
                 variant={'ghost'}
                 size={'icon'}
@@ -183,7 +185,7 @@ export const CreatePostDefault = ({ onSuccess, data }: CreatePostDefaultProps) =
         </div>
       </div>
       <DialogFooter className="mx-4 pb-2">
-        <Button className="w-full" variant={isDisabledSubmitButton ? 'disabled' : 'default'}>
+        <Button type="submit" className="w-full" variant={isDisabledSubmitButton ? 'disabled' : 'default'}>
           Post
         </Button>
       </DialogFooter>

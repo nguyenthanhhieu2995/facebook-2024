@@ -48,11 +48,10 @@ interface UserInfoProps {
 
 export default function UserInfo({ data, onClick }: UserInfoProps) {
   //const { me } = useOutletContext<{ me: User }>()
-  //console.log(me)
   return (
     <div className="group relative my-3 flex flex-row items-center rounded-xl px-4 font-normal">
       <div className="flex-none">
-        <Image className="size-10 rounded-full" src={data?.avatar} alt={data ? data.firstName+' '+data.lastName : ''} />
+        <Image className="size-10 rounded-full object-cover" src={data?.avatar} alt={data ? data.firstName+' '+data.lastName : ''} />
       </div>
       <div className="flex flex-col pl-2">
         <h4 className="font-semibold text-black">{data?.firstName} {data?.lastName}</h4>

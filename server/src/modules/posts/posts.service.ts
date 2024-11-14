@@ -13,27 +13,57 @@ export class PostsService {
         likes: {
           include: {
             user: true,
-          }
-        },     
-      }
+          },
+        },
+      },
     });
+    
     const total = prisma.post.count();
-    return { items, total, page, limit };
+    return { items, total, page, limit};
   }
 
-  static async likePost( postId: string, userId: string) {
-    return prisma.post.update({
+  static async likePost(postId: string, userId: string) {
+    const isLiked = await prisma.post.findFirst({
+      where: {
+        id: postId,
+      },
+      select: {
+        likes: {
+          where: {
+            userId,
+          },
+        },
+      },
+    });
+    if (isLiked.likes.length > 0) {
+      const likeId = isLiked.likes[0].id;
+      const result = await prisma.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          likes: {
+            delete: {
+              id: likeId,
+            },
+          },
+        },
+      });
+      return result;
+    }
+    const result = await prisma.post.update({
       where: {
         id: postId,
       },
       data: {
         likes: {
           create: {
-            userId
-          }
+            userId,
+          },
         },
       },
     });
+    return result;
   }
 
   static async createPost(data: Prisma.PostCreateInput) {

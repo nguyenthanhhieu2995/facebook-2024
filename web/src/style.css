@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
 @layer base {
   body {
     text-rendering: optimizeSpeed;
@@ -14,6 +17,7 @@
     padding: 0;
     box-sizing: border-box;
   }
+  
   *::-webkit-scrollbar {
     width: 8px;
   }
@@ -89,13 +93,13 @@
   }
 }
 @layer utilities {
-  /* Hide scrollbar for Chrome, Safari and Opera */
+  
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-  /* Hide scrollbar for IE, Edge and Firefox */
+  
   .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
   }
 }

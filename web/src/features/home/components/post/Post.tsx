@@ -11,15 +11,21 @@ import Comment from './Comment'
 import { formatDistanceToNow } from 'date-fns'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { cn } from '@/utils/cn'
+
 interface PostProps {
   post: IPost
+  className?: string
 }
 
-function Post({ post }: PostProps) {
+function Post({ post, className }: PostProps) {
+  const myLike = post.likes.find(like => like.user.id === post.owner.id)
+  console.log(myLike)
   const queryClient = useQueryClient()
   const likeMutation = useMutation({
     mutationFn: likePost,
-    onSuccess: () => {
+    onSuccess: data => {
+      console.log(data.liked)
       queryClient.invalidateQueries({ queryKey: ['posts'] })
       toast.success('Like post successfully')
     }
@@ -27,7 +33,7 @@ function Post({ post }: PostProps) {
   const updatedAt = new Date(post.updatedAt)
   const distanceToNow = formatDistanceToNow(updatedAt, { addSuffix: true })
   return (
-    <div className="mb-2 flex w-125 flex-col space-y-2 rounded-lg bg-white shadow-md">
+    <div className={cn('mb-2 flex w-125 flex-col space-y-2 rounded-lg bg-white shadow-md', className)}>
       <div className="px-3 pt-4">
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -87,8 +93,8 @@ function Post({ post }: PostProps) {
             size={'sm'}
             onClick={() => likeMutation.mutate(post.id)}
           >
-            <ThumbsUp className="size-5" />
-            Like
+            <ThumbsUp className={cn('size-5', { 'text-blue-500 fill-blue-500': myLike })} />
+            <p className={cn({ 'text-blue-500': myLike })}>Like</p>
           </Button>
           <Button className="hover:bg-gray-100" variant={'ghost'} size={'sm'}>
             <MessageSquare className="size-5" />

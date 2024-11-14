@@ -14,7 +14,6 @@ import { resetPasswordSchema } from '@/helpers/schema'
 
 export default function resetPassword() {
   const location = useLocation()
-  console.log(location)
   const navigate = useNavigate()
   const form = useForm<z.infer<typeof resetPasswordSchema>>({
     resolver: zodResolver(resetPasswordSchema),

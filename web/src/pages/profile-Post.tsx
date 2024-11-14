@@ -56,7 +56,7 @@ export default function ProfilePost() {
             </Button>
           </div>
         </div>
-        <PostList />
+        <PostList className='w-full'/>
       </div>
     </div>
   )

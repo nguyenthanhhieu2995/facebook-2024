@@ -34,8 +34,8 @@ router
     if (!post) {
       return c.json({ message: "Post not found" }, 404);
     }
-    await PostsService.likePost(id, user.id);
-    return c.json({ message: "Like post successfully" });
+    const result = await  PostsService.likePost(id, user.id);
+    return c.json( result );
   })
   .delete("/:id", auth, async (c) => {
     const id = c.req.param("id");
